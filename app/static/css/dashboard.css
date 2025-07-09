@@ -61,8 +61,7 @@
 }
 
 .boxSaran{
-  background-image: url('../assets/Template\ Button\ Saran.png');
-  background-size: cover;
+  background-color: var(--primary);
   font-size: 1.5rem;
   margin-bottom: 2rem;
   padding: 1rem;
@@ -72,9 +71,14 @@
 }
 
 .boxSaran:hover{
+  color: var(--primary);
   background-image: none;
-  background-color: var(--ijo-pucat);
+  background-color: var(--hitam);
   border: var(--ijo-pucat);
+}
+
+.bintang_saran{
+  transform: translate(0.5rem, -0.7rem);
 }
 
 /* Filter Controls */
@@ -87,16 +91,26 @@
 }
 
 .btn-filter {
-  border-bottom: 0.15rem solid var(--ijo-sage);
   color: var(--hitam);
   padding: 1.4rem 0rem;
   border-radius: 0.5rem;
   font-weight: 600;
   font-size: 1rem;
+  /* sementara gatau weh caranya minus responsive kacaw */
+  border-bottom: 0.15rem solid var(--ijo-sage);
   background-image: url('../assets/box_tanggal.svg');
   background-size: cover ;
   background-repeat: no-repeat;
 }
+
+/* .cuida--dropdown-outline {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232EC4B6' d='M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10'/%3E%3C/svg%3E");
+} */
 
 .btn-filter::placeholder {
   color: var(--hitam);
@@ -181,24 +195,28 @@
 
 /* AI Analysis Button */
 .ai-analysis {
-  text-align: center;
-  margin: 2rem 0;
+  text-align: left;
+  margin: 1.5rem 0;
 }
 
 .btn-ai {
-  background-color: var(--salmon);
-  color: var(--primary);
+  background-color: var(--primary);
+  color: var(--hitam);
   border: none;
   padding: 1rem 3rem;
   border-radius: 0.75rem;
   font-weight: 600;
   font-size: 1.1rem;
-  box-shadow: 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3);
 }
 
 .btn-ai:hover {
-  background-color: var(--salmon-terang);
-  color: var(--hitam);
+  background-color: var(--hitam);
+  color: var(--primary);
+}
+
+.svg-bintang{
+  transform: translate(0.1rem, -0.7rem);
 }
 
 /* Responsive Design */
