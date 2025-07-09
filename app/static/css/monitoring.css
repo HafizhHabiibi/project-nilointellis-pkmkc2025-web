@@ -1,0 +1,130 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    --primary: #FFFFFF;
+    --salmon: #FFA630;
+    --salmon-terang: #FECD8D;
+    --ijo-sage: #2EC4B6;
+    --ijo-pucat: #CBF3F0;
+    --hitam: #1b1b1b;
+}
+
+.container{
+  color: var(--hitam);
+  background-color: #fff;
+  width: 90%;
+  text-align: center;
+  height: fit-content;
+  margin: 2rem 0;
+  margin-left: 3.5rem;
+  overflow: auto;
+  scroll-snap-type: both mandatory;
+  white-space: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.container2{
+  margin-left: 2rem;
+}
+
+.camera_container {
+  background-color: var(--primary);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3);
+}
+
+/* bagian camera */
+.camera_view {
+  width: 100%;
+  height: 25rem;
+  border-radius: 0.5rem;
+  background-color: var(--hitam);
+}
+
+.box_toggle_camera {
+  background-color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3); /* 3px 3px */
+  border: none;
+}
+
+.box_toggle_camera:hover {
+  background-color: var(--hitam);
+  color: var(--primary);
+}
+
+.svg_camera{
+ transform: translate(0.5rem, -1rem);
+}
+
+/* bagian indikasi  */
+.container .boxes {
+  margin-top: 0.9375rem; /* 15px */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem; /* 20px */
+  width: 100%;
+  height: 14.5rem;
+}
+
+.container .boxes .box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* ubah dari left ke flex-start */
+  border-radius: 0.75rem; /* 12px */
+  padding: 1.5rem 3rem;
+  background-color: var(--primary);
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3);
+  margin-bottom: 2rem; /* Remove margin-bottom, use grid gap */
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left; /* pastikan text rata kiri */
+}
+
+.boxes .box .text {
+  white-space: nowrap;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--hitam);
+  text-align: left; /* pastikan text rata kiri */
+}
+
+
+.boxes .box .number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--hitam);
+  text-align: center;
+  width: 100%;
+  padding: 2rem;
+}
+
+/* bagian analisis kematian */
+.container_analisis {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title3{
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--hitam);
+  margin-bottom: 1rem;
+}
+
+.box_analisis_ai{
+  background-color: var(--primary);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 25rem;
+  margin-bottom: 1rem;
+}
