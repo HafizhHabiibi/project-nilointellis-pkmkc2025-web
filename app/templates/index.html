@@ -1,0 +1,245 @@
+{% extends "layout_dashboard.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="../static/css/dashboard.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+{% endblock %}
+
+<!-- dumb ways but its works xixixi -->
+{% block sidebar_dasboard %}
+class ="active"
+{% endblock %}
+
+{% block content %}
+<h4 class="title title2">Dashboard</h4>
+<div class="container">
+    <div class="boxes">
+        <div class="box box_1">
+            <span class="text">PH Air</span>
+            <span class="number">
+                N/A
+                <img class="imgLogo" src="../static/assets/Vector ph.svg" alt="PH air">
+            </span>
+        </div>
+        <div class="box box_2">
+            <span class="text">Suhu Air</span>
+            <span class="number">
+                N/A
+                <img class="imgLogo" src="../static/assets/vector suhu.svg" alt="">
+            </span>
+        </div>
+        <div class="box box_3">
+            <span class="text">TDS</span>
+            <span class="number">
+                N/A <!-- sementara ntar diganti sama dynamic -->
+                <img class="imgLogo" src="../static/assets/Vector TDS.svg" alt="">
+            </span>
+        </div>
+        <div class="box box_4">
+            <span class="text">Turbidity</span>
+            <span class="number">
+                N/A
+                <img class="imgLogo" src="../static/assets/Vector turbidity.svg" alt="">
+            </span>
+        </div>
+    </div>
+
+    <!-- Button Dapatkan Saran -->
+    <div class="col-md-4">
+        <button class="btn btn-light fw-bold w-100 mt-4 boxSaran">
+            Dapatkan Saran
+        </button>
+    </div>
+
+    <!-- Filter Controls -->
+
+    <!-- Filter Tanggal -->
+    <div class="filter-controls">
+        <input type="text" id="tanggalAwal" placeholder="Tanggal Awal" class="btn btn-filter">
+        <input type="text" id="tanggalAkhir" placeholder="Tanggal Akhir" class="btn btn-filter">
+
+        <!-- granulitas isinya apa? -->
+        <input type="text" class="btn btn-filter" placeholder="Granulitas">
+    </div>
+
+    <!-- Ringkasan Statistik -->
+    <div class="statistics-table">
+        <h4>Ringkasan Statistik</h4>
+        <table class="table table-isi">
+            <thead>
+                <tr>
+                    <th>Sensor</th>
+                    <th>Maksimum</th>
+                    <th>Minimum</th>
+                    <th>Rata-Rata</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PH</td>
+                    <!-- sementara, ntar ganti pake data dynamic -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Suhu</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>TDS</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Turbidity</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section statistics-table">
+        <div class="chart-row">
+            <div class="chart-container">
+                <h5>Grafik PH</h5>
+                <canvas id="phChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h5>Grafik Suhu</h5>
+                <canvas id="suhuChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="chart-container">
+                <h5>Grafik TDS</h5>
+                <canvas id="tdsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h5>Grafik Turbidity</h5>
+                <canvas id="turbidityChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analisis AI Button -->
+    <div class="ai-analysis">
+        <button class="btn btn-ai">Analisis AI</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  flatpickr("#tanggalAwal", {
+    dateFormat: "d/m/Y"
+  });
+  flatpickr("#tanggalAkhir", {
+    dateFormat: "d/m/Y"
+  });
+
+    // dumny data charts sementara
+    const sampleData = {
+        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+        datasets: [{
+            data: [7, 6.8, 7.2, 6.9, 7.1, 6.7, 7.3, 6.8, 7.0, 6.9],
+            backgroundColor: 'rgba(46, 196, 182, 0.6)',
+            borderColor: 'rgba(46, 196, 182, 1)',
+            borderWidth: 2,
+            fill: true
+        }]
+    };
+
+    const chartConfig = {
+        type: 'line',
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    };
+
+    // Create PH Chart
+    const phCtx = document.getElementById('phChart').getContext('2d');
+    new Chart(phCtx, {
+        ...chartConfig,
+        data: {
+            ...sampleData,
+            datasets: [{
+                ...sampleData.datasets[0],
+            backgroundColor: 'rgba(46, 196, 182, 0.6)',
+            borderColor: 'rgba(46, 196, 182, 1)'
+        }]
+    }
+});
+
+// Create Suhu Chart
+const suhuCtx = document.getElementById('suhuChart').getContext('2d');
+new Chart(suhuCtx, {
+    ...chartConfig,
+    data: {
+        ...sampleData,
+        datasets: [{
+            ...sampleData.datasets[0],
+            data: [25, 26, 24, 27, 25, 26, 24, 25, 26, 25],
+            backgroundColor: 'rgba(255, 166, 48, 0.6)',
+            borderColor: 'rgba(255, 166, 48, 1)'
+        }]
+    }
+});
+
+// Create TDS Chart
+const tdsCtx = document.getElementById('tdsChart').getContext('2d');
+new Chart(tdsCtx, {
+    ...chartConfig,
+    data: {
+        ...sampleData,
+        datasets: [{
+            ...sampleData.datasets[0],
+            data: [150, 145, 160, 155, 150, 140, 165, 150, 145, 155],
+            backgroundColor: 'rgba(46, 196, 182, 0.6)',
+            borderColor: 'rgba(46, 196, 182, 1)'
+        }]
+    }
+});
+
+// Create Turbidity Chart
+const turbidityCtx = document.getElementById('turbidityChart').getContext('2d');
+new Chart(turbidityCtx, {
+    ...chartConfig,
+    data: {
+        ...sampleData,
+        datasets: [{
+            ...sampleData.datasets[0],
+            data: [2, 1.8, 2.2, 1.9, 2.1, 1.7, 2.3, 1.8, 2.0, 1.9],
+            backgroundColor: 'rgba(255, 166, 48, 0.6)',
+            borderColor: 'rgba(255, 166, 48, 1)'
+        }]
+    }
+});
+</script>
+
+
+{% endblock %}

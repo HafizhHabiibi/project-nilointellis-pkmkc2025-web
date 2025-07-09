@@ -1,0 +1,156 @@
+/* Custom styles for Flask App */
+* {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    --primary: #FFFFFF;
+    --salmon: #FFA630;
+    --salmon-terang: #FECD8D;
+    --ijo-sage: #2EC4B6;
+    --ijo-pucat: #CBF3F0;
+    --hitam: #1b1b1b;
+}
+
+body {
+    background-color: var(--primary);
+    min-height: 100vh;
+    display: flex;
+}
+
+
+.active {
+    background-color: var(--ijo-pucat);
+    color: var(--primary);
+}
+.sidebar {
+    width: 20.5rem;
+    background-color: var(--primary);
+    padding-top: 3rem;
+    position: fixed;
+    height: 100%;
+    box-shadow: 0.5rem 0 1.5rem rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.title{
+    font-size: 3rem; /* 48px -> 3rem */
+    color: var(--hitam);
+    font-weight: 750;
+    margin-bottom: 1.5rem;
+}
+
+.sidebar a {
+    color: var(--hitam);
+    font-size: 1.5rem; /* 24px -> 1.5rem */
+    text-decoration: none;
+    padding: 1.7rem;
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: var(--ijo-pucat);
+    color: var(--hitam);
+}
+
+.btn-logout{
+    background-color: var(--primary);
+    /* background-color: var(--salmon); */
+    font-size: 1.5rem; /* 24px -> 1.5rem */
+    font-weight: 600;
+    border-radius: 0.5rem; /* 8px -> 0.5rem */
+    border: 0.1875rem solid var(--salmon); /* 3px -> 0.1875rem */
+    width: 15rem;
+    height: 4rem;
+    margin: auto auto;
+    }
+
+.btn-logout:hover {
+    background-color: var(--salmon);
+    color: var(--primary);
+}
+
+/* content main */
+.main-content {
+    margin-left: 22rem;
+    background-color: var(--primary);
+    width: 100%;
+}
+
+.title2{
+    font-size: 2.25rem;
+    /* margin-top: 2.4rem; */
+    padding-top: 3rem;
+}
+
+/* responsive */
+
+/* laptop */
+@media (max-width: 1366px) {
+    html {
+        font-size: 75%;
+    }
+}
+
+/* tablet */
+@media (max-width: 768px) {
+    html {
+        font-size: 62.5%;
+    }
+
+    .sidebar {
+        width: 18rem;
+    }
+
+    .main-content {
+        margin-left: 19rem;
+    }
+
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .sidebar a {
+        font-size: 1.2rem;
+        padding: 1.2rem;
+    }
+}
+
+/* mobile */
+@media (max-width: 450px) {
+    html {
+        font-size: 54%;
+    }
+
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .sidebar a {
+        font-size: 1rem;
+        padding: 0.8rem;
+        display: inline-block;
+        margin: 0.2rem;
+    }
+
+    .btn-logout {
+        width: 12rem;
+        height: 3rem;
+        font-size: 1.2rem;
+    }
+}
