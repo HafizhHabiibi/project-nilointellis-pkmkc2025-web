@@ -19,3 +19,8 @@ def monitoring():
 def prediksi():
     """Prediksi page"""
     return render_template('prediksi.html')
+
+@main_bp.route('/chatbot')
+def chatbot():
+    """Chatbot page"""
+    return render_template('chatbot.html')

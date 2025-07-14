@@ -1,0 +1,60 @@
+{% extends "layout_dashboard.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="../static/css/chatbot.css">
+{% endblock %}
+
+{% block sidebar_chatbot %}
+class="active"
+{% endblock %}
+
+{% block content %}
+<h4 class="title title2">Chatbot</h4>
+<div class="chat-container">
+
+    <div class="chat-messages" id="chat-messages">
+        <!-- pesan sample, nanti tambah dynamic disini-->
+        <div class="message-group user-group">
+            <div class="message user-message">
+                <span class="message-text">Bagaimana cara sukses budidaya ikan?</span>
+                <span class="message-time">14:26</span>
+            </div>
+        </div>
+
+        <div class="message-group bot-group">
+            <div class="message bot-message">
+                <span class="message-text">Gunakan bibit ikan yang sehat, bersiralah, dan berotasi dari nutrisi yang terukur produktif. Bibit yang seragam ukurannya akan memberikan pertumbuhan yang lebih baik.</span>
+                <span class="message-time">14:27</span>
+            </div>
+        </div>
+
+        <div class="message-group user-group">
+            <div class="message user-message">
+                <span class="message-text">Bagaimana cara sukses budidaya ikan?</span>
+                <span class="message-time">14:26</span>
+            </div>
+        </div>
+
+        <div class="message-group bot-group">
+            <div class="message bot-message">
+                <span class="message-text">Gunakan bibit ikan yang sehat, bersiralah, dan berotasi dari nutrisi yang terukur produktif. Bibit yang seragam ukurannya akan memberikan pertumbuhan yang lebih baik.</span>
+                <span class="message-time">14:27</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- input form chat -->
+    <div class="chat-input-container">
+        <div class="chat-input-area">
+            <input type="text" id="user-input" placeholder="Tanyakan Sesuatu ?">
+            <button id="send-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFA630" fill-rule="evenodd" d="M3.291 3.309a.75.75 0 0 0-.976.996l3.093 6.945H13a.75.75 0 0 1 0 1.5H5.408l-3.093 6.945a.75.75 0 0 0 .976.996l19-8a.75.75 0 0 0 0-1.382z" clip-rule="evenodd"/></svg>
+            </button>
+        </div>
+        <div class="disclaimer">
+            <span>Respons AI dapat mengandung kekeliruan. Mohon diperiksa ulang</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
