@@ -135,6 +135,8 @@
   outline: none;
   font-family: 'Poppins', sans-serif;
   color: var(--hitam);
+  resize: none;
+  overflow-y: auto;
 }
 
 #user-input::placeholder {
