@@ -37,7 +37,7 @@
   border-radius: 0.75rem; /* 12px */
   padding: 1.5rem 3rem; /* 15px 20px */
   background-color: var(--primary);
-  box-shadow: 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.3); /* 3px 3px */
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3); /* 3px 3px */
 }
 
 .boxes .box .text{

@@ -10,3 +10,6 @@ class Config:
   SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}/{DATABASE}'
   SQLALCHEMY_TRACK_MODIFICATIONS = False
   SQLALCHEMY_RECORD_QUERIES = True
+
+  # Flask Debug Configuration
+  DEBUG = os.environ.get('FLASK_DEBUG', '1').lower() in ['true', '1', 'yes']

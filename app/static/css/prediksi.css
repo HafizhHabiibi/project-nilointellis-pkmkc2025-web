@@ -1,0 +1,71 @@
+* {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  --primary: #FFFFFF;
+  --salmon: #FFA630;
+  --salmon-terang: #FECD8D;
+  --ijo-sage: #2EC4B6;
+  --ijo-pucat: #CBF3F0;
+  --hitam: #1b1b1b;
+}
+
+.container {
+  padding: 1rem 15rem;
+}
+
+.title3{
+  font-size: 1.8rem;
+}
+
+.prediksi-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem; /* 12px = 0.75rem */
+  margin-top: 1.875rem; /* 30px = 1.875rem */
+  /* padding: 1rem 15rem; */
+}
+
+
+.input-prediksi {
+  display: flex;
+  align-items: left;
+  gap: 0.5rem; /* 8px = 0.5rem */
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3);
+  width: 100%;
+  border-radius: 0.5rem; /* 8px = 0.5rem */
+}
+
+.input-prediksi input {
+  width: 80%;
+  font-size: 2rem;
+  text-align: right;
+  border: none;
+  border-radius: 0.5rem; /* 8px = 0.5rem */
+  outline: none;
+  color: var(--hitam);
+  margin: auto;
+}
+
+.plus-button,
+.minus-button {
+  background-color: var(--primary);
+  color: var(--salmon);
+  border: none;
+  font-weight: 200;
+  border-radius: 0.5rem; /* 8px = 0.5rem */
+  padding: 0 0.875rem; /* 0px 14px = 0 0.875rem */
+  cursor: pointer;
+  font-size: 3rem;
+}
+
+.plus-button:hover,
+.minus-button:hover {
+  /* background-color: var(--hitam); */
+  color: var(--salmon-terang);
+}
+
+.submitPrediksi {
+  width: 100%;
+  padding: 1rem 10rem;
+}
