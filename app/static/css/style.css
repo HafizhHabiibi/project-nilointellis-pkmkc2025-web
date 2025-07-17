@@ -26,6 +26,7 @@ body.no-scroll {
     top: 1rem;
     left: 1rem;
     z-index: 1001;
+    background-color: var(--primary);
     border: 2px solid var(--hitam);
     border-radius: 0.5rem;
     width: 3rem;
@@ -53,44 +54,12 @@ body.no-scroll {
 
 .hamburger-active{
     margin-left: 16rem;
+    transition: margin-left 0.4s ease;
 }
 
 /* Hamburger button hanya tampil pada tablet dan mobile */
-@media (min-width: 993px) {
+@media (min-width: 769px) {
     .hamburger-btn {
-        display: none !important;
-    }
-}
-
-/* Mobile/Tablet Navbar */
-.mobile-navbar {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4rem;
-    background-color: var(--primary);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
-    border-bottom: 2px solid var(--ijo-sage);
-    padding: 0 4rem;
-}
-
-.mobile-title {
-    font-size: 1.8rem;
-    color: var(--hitam);
-    font-weight: 750;
-    margin: 0;
-    text-align: center;
-    flex: 1;
-}
-
-/* Hide mobile navbar on desktop */
-@media (min-width: 993px) {
-    .mobile-navbar {
         display: none !important;
     }
 }
@@ -181,18 +150,6 @@ body.no-scroll {
 
 /* responsive */
 
-/* desktop */
-@media (min-width: 993px) {
-    .sidebar {
-        transform: translateX(0);
-        position: fixed;
-    }
-
-    .main-content {
-        margin-left: 22rem;
-    }
-}
-
 /* laptop */
 @media (max-width: 1366px) {
     html {
@@ -202,34 +159,7 @@ body.no-scroll {
 
 /* medium tablet */
 @media (max-width: 992px) {
-    .hamburger-btn {
-        display: flex;
-        top: 0.5rem;
-        left: 1rem;
-    }
-
-    .mobile-navbar {
-        display: flex;
-    }
-
-    .hamburger-btn svg {
-        width: 22px;
-        height: 22px;
-    }
-
-    .sidebar {
-        width: 18rem;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        z-index: 1000;
-    }
-
-    .sidebar-open {
-        transform: translateX(0) !important;
-    }
-
     .main-content {
-        margin-left: 0;
         width: 100%;
         padding-top: 4rem;
         transition: margin-left 0.3s ease;
@@ -237,7 +167,7 @@ body.no-scroll {
 }
 
 /* tablet */
-@media (max-width: 768px) {
+@media (max-width: 769px) {
     html {
         font-size: 62.5%;
     }
@@ -273,9 +203,9 @@ body.no-scroll {
     }
 
     .main-content {
-        margin-left: 0;
         width: 100%;
-        padding-top: 4rem;
+        margin: 0;
+        padding: 4rem 3rem;
         transition: margin-left 0.3s ease;
     }
 
@@ -331,7 +261,6 @@ body.no-scroll {
     }
 
     .main-content {
-        margin-left: 0;
         padding: 1rem;
         padding-top: 4.5rem;
         width: 100%;
