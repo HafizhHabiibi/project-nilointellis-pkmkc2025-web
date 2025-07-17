@@ -20,6 +20,7 @@ body {
     background-color: var(--ijo-pucat);
     color: var(--primary);
 }
+
 .sidebar {
     width: 20.5rem;
     background-color: var(--primary);
@@ -39,10 +40,11 @@ body {
 
 .sidebar a {
     color: var(--hitam);
-    font-size: 1.5rem; /* 24px -> 1.5rem */
+    font-size: 1.3rem; /* 24px -> 1.5rem */
     text-decoration: none;
-    padding: 1.7rem;
+    padding: 1.7rem 3.5rem;
     display: block;
+    text-align: left;
 }
 
 .sidebar a:hover {
@@ -57,7 +59,7 @@ body {
     font-weight: 600;
     border-radius: 0.5rem; /* 8px -> 0.5rem */
     border: 0.1875rem solid var(--salmon); /* 3px -> 0.1875rem */
-    width: 15rem;
+    width: 12rem;
     height: 4rem;
     margin: auto auto;
     }
