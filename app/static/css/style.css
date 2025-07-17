@@ -15,6 +15,103 @@ body {
     display: flex;
 }
 
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Hamburger Button */
+.hamburger-btn {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1001;
+    border: 2px solid var(--hitam);
+    border-radius: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2); */
+}
+
+.hamburger-btn:hover {
+    background-color: var(--ijo-pucat);
+    transform: scale(1.05);
+}
+
+.hamburger-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.hamburger-active svg {
+    transform: rotate(90deg);
+}
+
+.hamburger-active{
+    margin-left: 16rem;
+}
+
+/* Hamburger button hanya tampil pada tablet dan mobile */
+@media (min-width: 993px) {
+    .hamburger-btn {
+        display: none !important;
+    }
+}
+
+/* Mobile/Tablet Navbar */
+.mobile-navbar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4rem;
+    background-color: var(--primary);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid var(--ijo-sage);
+    padding: 0 4rem;
+}
+
+.mobile-title {
+    font-size: 1.8rem;
+    color: var(--hitam);
+    font-weight: 750;
+    margin: 0;
+    text-align: center;
+    flex: 1;
+}
+
+/* Hide mobile navbar on desktop */
+@media (min-width: 993px) {
+    .mobile-navbar {
+        display: none !important;
+    }
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    transition: opacity 0.3s ease;
+}
+
+.overlay-active {
+    display: block !important;
+}
+
 
 .active {
     background-color: var(--ijo-pucat);
@@ -84,10 +181,58 @@ body {
 
 /* responsive */
 
+/* desktop */
+@media (min-width: 993px) {
+    .sidebar {
+        transform: translateX(0);
+        position: fixed;
+    }
+
+    .main-content {
+        margin-left: 22rem;
+    }
+}
+
 /* laptop */
 @media (max-width: 1366px) {
     html {
         font-size: 75%;
+    }
+}
+
+/* medium tablet */
+@media (max-width: 992px) {
+    .hamburger-btn {
+        display: flex;
+        top: 0.5rem;
+        left: 1rem;
+    }
+
+    .mobile-navbar {
+        display: flex;
+    }
+
+    .hamburger-btn svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .sidebar {
+        width: 18rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+
+    .sidebar-open {
+        transform: translateX(0) !important;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 4rem;
+        transition: margin-left 0.3s ease;
     }
 }
 
@@ -97,12 +242,41 @@ body {
         font-size: 62.5%;
     }
 
+    .hamburger-btn {
+        display: flex;
+        top: 0.5rem;
+        left: 1rem;
+    }
+
+    .mobile-navbar {
+        display: flex;
+    }
+
+    .mobile-title {
+        font-size: 1.6rem;
+    }
+
+    .hamburger-btn svg {
+        width: 22px;
+        height: 22px;
+    }
+
     .sidebar {
         width: 18rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+
+    .sidebar-open {
+        transform: translateX(0) !important;
     }
 
     .main-content {
-        margin-left: 19rem;
+        margin-left: 0;
+        width: 100%;
+        padding-top: 4rem;
+        transition: margin-left 0.3s ease;
     }
 
     .title {
@@ -121,21 +295,46 @@ body {
         font-size: 54%;
     }
 
-    body {
-        flex-direction: column;
+    .hamburger-btn {
+        display: flex;
+        top: 0.75rem;
+        left: 0.8rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .mobile-navbar {
+        display: flex;
+        height: 3.5rem;
+        padding: 0 3.5rem;
+    }
+
+    .mobile-title {
+        font-size: 1.4rem;
+    }
+
+    .hamburger-btn svg {
+        width: 20px;
+        height: 20px;
     }
 
     .sidebar {
-
-        width: 100%;
-        height: auto;
-        position: relative;
+        width: 16rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
         padding: 1rem;
+    }
+
+    .sidebar-open {
+        transform: translateX(0) !important;
     }
 
     .main-content {
         margin-left: 0;
         padding: 1rem;
+        padding-top: 4.5rem;
+        width: 100%;
     }
 
     .title {
@@ -146,13 +345,20 @@ body {
     .sidebar a {
         font-size: 1rem;
         padding: 0.8rem;
-        display: inline-block;
-        margin: 0.2rem;
+        display: block;
+        margin: 0.2rem 0;
+        text-align: left;
     }
 
     .btn-logout {
-        width: 12rem;
-        height: 3rem;
-        font-size: 1.2rem;
+        width: 10rem;
+        height: 2.5rem;
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    .title2 {
+        padding-top: 1rem;
+        font-size: 1.8rem;
     }
 }
