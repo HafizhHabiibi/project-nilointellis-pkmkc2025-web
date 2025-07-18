@@ -10,6 +10,8 @@
     {% endblock %}
 </head>
 <body>
+    <!-- bagian responsive mobile -->
+
     <!-- Hamburger Button -->
     <button class="hamburger-btn" id="hamburgerBtn">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -19,6 +21,8 @@
 
     <!-- container sidebar buat mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- end responsive mobile -->
 
     <!-- sidebar -->
     <div class="sidebar d-flex flex-column" id="sidebar">
@@ -40,6 +44,7 @@
 
     <main class="main-content">
         {% block content %}
+        <!-- konten utama page -->
         {% endblock %}
     </main>
 

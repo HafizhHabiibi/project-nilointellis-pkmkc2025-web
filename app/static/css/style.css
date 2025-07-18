@@ -233,16 +233,6 @@ body.no-scroll {
         height: 2.5rem;
     }
 
-    .mobile-navbar {
-        display: flex;
-        height: 3.5rem;
-        padding: 0 3.5rem;
-    }
-
-    .mobile-title {
-        font-size: 1.4rem;
-    }
-
     .hamburger-btn svg {
         width: 20px;
         height: 20px;
