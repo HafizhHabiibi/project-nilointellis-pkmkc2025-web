@@ -1,13 +1,11 @@
 from flask import Flask
 from config import Config
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app,db)
+# Set permanent session lifetime dari config
+app.permanent_session_lifetime = Config.PERMANENT_SESSION_LIFETIME
 
 # Import models and routes after app initialization
 from app import models

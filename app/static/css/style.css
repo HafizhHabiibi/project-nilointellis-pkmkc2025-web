@@ -148,6 +148,133 @@ body.no-scroll {
     padding-top: 3rem;
 }
 
+/* Logout Modal Styling */
+.logout-modal {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.logout-modal-title {
+    color: var(--hitam);
+    font-weight: 600;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.logout-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.logout-modal-close:hover {
+    opacity: 1;
+}
+
+.logout-modal-body {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.logout-icon-container {
+    margin-bottom: 1.5rem;
+}
+
+.logout-icon {
+    color: var(--salmon);
+    filter: drop-shadow(0 2px 4px rgba(220, 53, 69, 0.3));
+}
+
+.logout-message {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--hitam);
+    margin-bottom: 0.5rem;
+}
+
+.logout-submessage {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+.logout-modal-footer {
+    padding: 1rem 1.5rem;
+    background: #fff;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.logout-cancel-btn {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.logout-cancel-btn:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+    transform: translateY(-1px);
+}
+
+.logout-confirm-btn {
+    background: var(--salmon);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.logout-confirm-btn:hover {
+    background: var(--salmon-terang);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 153, 53, 0.3);
+}
+
+/* Modal animation */
+.modal.fade .modal-dialog {
+    transform: scale(0.8) translateY(-50px);
+    transition: all 0.3s ease;
+}
+
+.modal.show .modal-dialog {
+    transform: scale(1) translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .logout-modal-body {
+        padding: 1.5rem 1rem;
+    }
+
+    /* .logout-modal-footer {
+        flex-direction: column;
+        align-items: stretch;
+    } */
+
+    .logout-cancel-btn,
+    .logout-confirm-btn {
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+}
+
 /* responsive */
 
 /* laptop */

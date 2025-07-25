@@ -39,7 +39,15 @@
         <a href="{{ url_for('main.chatbot') }}" {% block sidebar_chatbot %} {% endblock %}>
             <svg xmlns="http://www.w3.org/2000/svg" width="31" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6 14h8v-2H6zm0-3h12V9H6zm0-3h12V6H6zM2 22V4q0-.825.588-1.412T4 2h16q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18H6zm3.15-6H20V4H4v13.125zM4 16V4z"/></svg>
             Chatbot</a>
-        <button class= "btn btn-sm btn-logout">Log Out</button>
+        <!-- <form action="{{ url_for('main.logout') }}" method="post" style="margin-top: 1rem;">
+            <button type="submit" class="btn btn-sm btn-logout" onclick="return confirm('Apakah Anda yakin ingin logout?')">
+            Log Out
+            </button>
+        </form> -->
+
+        <button type="button" class="btn btn-sm btn-logout" data-bs-toggle="modal" data-bs-target="#logoutModal">
+            Log Out
+        </button>
     </div>
 
     <main class="main-content">
@@ -47,6 +55,45 @@
         <!-- konten utama page -->
         {% endblock %}
     </main>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content logout-modal">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title logout-modal-title" id="logoutModalLabel">
+                        Konfirmasi Logout
+                    </h5>
+                    <button type="button" class="btn-close logout-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body logout-modal-body">
+                    <div class="logout-icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor" class="logout-icon">
+                            <path d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h6q.425 0 .713.288T12 4t-.287.713T11 5H5v14h6q.425 0 .713.288T12 20t-.287.713T11 21zm12.175-8H10q-.425 0-.712-.288T9 12t.288-.712T10 11h7.175L15.3 9.125q-.275-.275-.275-.675t.275-.7t.7-.313t.725.288L20.3 11.3q.3.3.3.7t-.3.7l-3.575 3.575q-.3.275-.712.288t-.713-.288q-.275-.3-.262-.712t.287-.688z"/>
+                        </svg>
+                    </div>
+                    <p class="logout-message">Apakah Anda yakin ingin keluar dari sistem?</p>
+                    <p class="logout-submessage">Anda akan diarahkan ke halaman login.</p>
+                </div>
+                <div class="modal-footer border-0 logout-modal-footer">
+                    <button type="button" class="btn btn-secondary logout-cancel-btn" data-bs-dismiss="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 5px;">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                        Batal
+                    </button>
+                    <form action="{{ url_for('main.logout') }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn logout-confirm-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 5px;">
+                                <path d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h6q.425 0 .713.288T12 4t-.287.713T11 5H5v14h6q.425 0 .713.288T12 20t-.287.713T11 21zm12.175-8H10q-.425 0-.712-.288T9 12t.288-.712T10 11h7.175L15.3 9.125q-.275-.275-.275-.675t.275-.7t.7-.313t.725.288L20.3 11.3q.3.3.3.7t-.3.7l-3.575 3.575q-.3.275-.712.288t-.713-.288q-.275-.3-.262-.712t.287-.688z"/>
+                            </svg>
+                            Ya, Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -104,6 +151,46 @@
                 closeSidebar();
             }
         });
+
+        // Logout Modal Enhancement
+        const logoutModal = document.getElementById('logoutModal');
+
+        // Add smooth animation when modal shows
+        if (logoutModal) {
+            logoutModal.addEventListener('show.bs.modal', function() {
+                document.body.style.overflow = 'hidden';
+            });
+
+            logoutModal.addEventListener('hidden.bs.modal', function() {
+                document.body.style.overflow = 'auto';
+            });
+
+            // Add click sound effect (optional)
+            const logoutBtn = document.querySelector('[data-bs-target="#logoutModal"]');
+            const confirmBtn = document.querySelector('.logout-confirm-btn');
+            const cancelBtn = document.querySelector('.logout-cancel-btn');
+
+            // Add hover effects
+            if (confirmBtn) {
+                confirmBtn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px) scale(1.02)';
+                });
+
+                confirmBtn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            }
+
+            if (cancelBtn) {
+                cancelBtn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px) scale(1.02)';
+                });
+
+                cancelBtn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            }
+        }
     </script>
 
     {% block scripts %}
