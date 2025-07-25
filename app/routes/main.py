@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, session
-from flask_login import login_required, current_user
 from app.controller.user_controller import UserController
+from app.utils.auth_utils import web_session_required
 
 # Create blueprint
 main_bp = Blueprint('main', __name__)
@@ -30,35 +30,27 @@ def logout():
 
 # PROTECTED WEB ROUTES
 @main_bp.route('/dashboard')
+@web_session_required
 def dashboard():
     """Dashboard page"""
-    if not user_controller.check_session():
-        flash('Silakan login terlebih dahulu!', 'error')
-        return redirect(url_for('main.index'))
     return render_template('dashboard.html')
 
 @main_bp.route('/monitoring')
+@web_session_required
 def monitoring():
     """Monitoring page"""
-    if not user_controller.check_session():
-        flash('Silakan login terlebih dahulu!', 'error')
-        return redirect(url_for('main.index'))
     return render_template('monitoring.html')
 
 @main_bp.route('/prediksi')
+@web_session_required
 def prediksi():
     """Prediksi page"""
-    if not user_controller.check_session():
-        flash('Silakan login terlebih dahulu!', 'error')
-        return redirect(url_for('main.index'))
     return render_template('prediksi.html')
 
 @main_bp.route('/chatbot')
+@web_session_required
 def chatbot():
     """Chatbot page"""
-    if not user_controller.check_session():
-        flash('Silakan login terlebih dahulu!', 'error')
-        return redirect(url_for('main.index'))
     return render_template('chatbot.html')
 
 

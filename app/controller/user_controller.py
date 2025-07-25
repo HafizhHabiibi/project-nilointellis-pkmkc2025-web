@@ -1,6 +1,6 @@
 from flask import request, jsonify, session
 from app.models.user_model import get_user_login
-from app.utils.auth_utils import generate_session_id
+from app.utils.auth_utils import create_user_session, clear_session, check_session, is_session_expired, refresh_session_activity
 
 class UserController:
     """Controller authentication"""
@@ -19,12 +19,8 @@ class UserController:
         user = get_user_login(username, password)
 
         if user:
-            # bikin session
-            session['user_id'] = str(user['_id'])
-            session['username'] = user['username']
-            session['session_id'] = generate_session_id()
-
-
+            # Create session menggunakan helper function
+            create_user_session(user)
             return {
                 'success': True,
                 'message': 'Login berhasil!'
@@ -37,8 +33,4 @@ class UserController:
 
     def logout(self):
         """Handle logout"""
-        session.clear()
-
-    def check_session(self):
-        """Check apakah user sudah login"""
-        return 'user_id' in session
+        clear_session()

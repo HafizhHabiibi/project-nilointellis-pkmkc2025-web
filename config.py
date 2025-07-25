@@ -2,7 +2,7 @@ import os
 from datetime import timedelta
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load .env
 load_dotenv()
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -27,11 +27,12 @@ class Config:
     MONGODB_DATABASE = os.environ.get('DB_DATABASE', 'nilointellis')
 
     # Session Configuration
-    SESSION_PERMANENT = os.environ.get('SESSION_PERMANENT', 'False').lower() in ['true', '1', 'yes']
+    SESSION_PERMANENT = True
     SESSION_TYPE = os.environ.get('SESSION_TYPE', 'filesystem')
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SECURE = False  # Set True jika menggunakan HTTPS
 
-    # Session Lifetime
-    SESSION_LIFETIME_DAYS = int(os.environ.get('SESSION_LIFETIME_DAYS', 1))
-    PERMANENT_SESSION_LIFETIME = timedelta(days=SESSION_LIFETIME_DAYS)
+    # Session Timeout - otomatis expire setelah 1 jam tidak aktif
+    SESSION_TIMEOUT_HOURS = int(os.environ.get('SESSION_TIMEOUT_HOURS', 1))
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=SESSION_TIMEOUT_HOURS)
