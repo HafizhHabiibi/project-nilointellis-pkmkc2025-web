@@ -60,3 +60,5 @@ def chatbot():
         flash('Silakan login terlebih dahulu!', 'error')
         return redirect(url_for('main.index'))
     return render_template('chatbot.html')
+
+
