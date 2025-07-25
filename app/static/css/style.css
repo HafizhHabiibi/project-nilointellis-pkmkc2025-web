@@ -19,6 +19,11 @@ body.no-scroll {
     overflow: hidden;
 }
 
+/* biar estetik gaada scroll bar */
+body::-webkit-scrollbar{
+    display: none;
+}
+
 /* Hamburger Button */
 .hamburger-btn {
     display: none;
@@ -151,7 +156,7 @@ body.no-scroll {
 /* Logout Modal Styling */
 .logout-modal {
     border: none;
-    border-radius: 15px;
+    border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
