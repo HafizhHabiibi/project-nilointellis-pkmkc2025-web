@@ -3,15 +3,7 @@ from datetime import datetime, timedelta
 
 class SensorModel:
   def __init__(self):
-    self.sensor_collection = db['sensors']
-
-  def create_sensor_data(self, suhu, ph, timestamp):
-    sensor_data = {
-      'suhu': suhu,
-      'ph': ph,
-      'timestamp': timestamp
-    }
-    self.sensor_collection.insert_one(sensor_data)
+    self.sensor_collection = db['sensor']
 
   def get_sensor_data(self):
     return list(self.sensor_collection.find())

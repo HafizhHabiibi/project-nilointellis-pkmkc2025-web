@@ -8,8 +8,6 @@ load_dotenv()
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    """Configuration for NiloIntellis Application"""
-
     # Flask Core Configuration
     SECRET_KEY = os.environ.get('SECRET_KEY', 'janganlupa')
     DEBUG = os.environ.get('FLASK_DEBUG', '1').lower() in ['true', '1', 'yes']
@@ -21,17 +19,10 @@ class Config:
     # MongoDB Configuration
 
     # connection mongo
-    MONGODB_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/nilointellis')
+    MONGODB_URI = os.environ.get('MONGODB_URI', 'mongodb+srv://nilointellis123:RisangKarbit123@cluster0.t6t6amy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 
     # db mongo
     MONGODB_DATABASE = os.environ.get('DB_DATABASE', 'nilointellis')
-
-    # Session Configuration
-    SESSION_PERMANENT = True
-    SESSION_TYPE = os.environ.get('SESSION_TYPE', 'filesystem')
-    SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'
-    SESSION_COOKIE_SECURE = False  # Set True jika menggunakan HTTPS
 
     # Session Timeout - otomatis expire setelah 1 jam tidak aktif
     SESSION_TIMEOUT_HOURS = int(os.environ.get('SESSION_TIMEOUT_HOURS', 1))
