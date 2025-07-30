@@ -15,7 +15,7 @@ def index():
     if request.method == 'POST':
         result = user_controller.web_login(request)
         if result['success']:
-            return redirect(url_for('main.dashboard'))
+            return redirect(url_for('dashboard.dashboard'))
         else:
             flash(result['message'], 'error')
 
@@ -27,30 +27,5 @@ def logout():
     user_controller.logout()
     flash('Logout berhasil!', 'success')
     return redirect(url_for('main.index'))
-
-# PROTECTED WEB ROUTES
-@main_bp.route('/dashboard')
-@web_session_required
-def dashboard():
-    """Dashboard page"""
-    return render_template('dashboard.html')
-
-@main_bp.route('/monitoring')
-@web_session_required
-def monitoring():
-    """Monitoring page"""
-    return render_template('monitoring.html')
-
-@main_bp.route('/prediksi')
-@web_session_required
-def prediksi():
-    """Prediksi page"""
-    return render_template('prediksi.html')
-
-@main_bp.route('/chatbot')
-@web_session_required
-def chatbot():
-    """Chatbot page"""
-    return render_template('chatbot.html')
 
 
