@@ -9,20 +9,20 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     # Flask Core Configuration
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'janganlupa')
-    DEBUG = os.environ.get('FLASK_DEBUG', '1').lower() in ['true', '1', 'yes']
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    DEBUG = os.environ.get('FLASK_DEBUG').lower() in ['true', '1', 'yes']
 
     # Server Configuration
-    HOST = os.environ.get('FLASK_HOST', '127.0.0.1')
-    PORT = int(os.environ.get('FLASK_PORT', 5000))
+    HOST = os.environ.get('FLASK_HOST')
+    PORT = int(os.environ.get('FLASK_PORT'))
 
     # MongoDB Configuration
 
     # connection mongo
-    MONGODB_URI = os.environ.get('MONGODB_URI', 'mongodb+srv://nilointellis123:RisangKarbit123@cluster0.t6t6amy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+    MONGODB_URI = os.environ.get('MONGODB_URI')
 
     # db mongo
-    MONGODB_DATABASE = os.environ.get('DB_DATABASE', 'nilointellis')
+    MONGODB_DATABASE = os.environ.get('DB_DATABASE')
 
     # Session Timeout - otomatis expire setelah 1 jam tidak aktif
     SESSION_TIMEOUT_HOURS = int(os.environ.get('SESSION_TIMEOUT_HOURS', 1))
