@@ -8,6 +8,9 @@ class SensorModel:
   def get_sensor_data(self):
     return list(self.sensor_collection.find())
 
+  def get_sensor_data_real_time(self):
+    return self.sensor_collection.find_one(sort=[('timestamp', -1)])
+
   def get_sensor_data_last_10_minutes(self):
     now = datetime.utcnow()
     ten_minutes_ago = now - timedelta(minutes=10)

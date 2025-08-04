@@ -18,28 +18,28 @@ class ="active"
         <div class="box box_1">
             <span class="text">PH Air</span>
             <span class="number">
-                N/A
+                <span id="ph_value">N/A</span>
                 <img class="imgLogo" src="../static/assets/Vector ph.svg" alt="PH air">
             </span>
         </div>
         <div class="box box_2">
             <span class="text">Suhu Air</span>
             <span class="number">
-                N/A
+                <span id="suhu_value">N/A</span>
                 <img class="imgLogo" src="../static/assets/vector suhu.svg" alt="">
             </span>
         </div>
         <div class="box box_3">
             <span class="text">TDS</span>
             <span class="number">
-                N/A <!-- sementara ntar diganti sama dynamic -->
+                <span id="tds_value">N/A</span>
                 <img class="imgLogo" src="../static/assets/Vector TDS.svg" alt="">
             </span>
         </div>
         <div class="box box_4">
             <span class="text">Turbidity</span>
             <span class="number">
-                N/A
+                <span id="turbidity_value">N/A</span>
                 <img class="imgLogo" src="../static/assets/Vector turbidity.svg" alt="">
             </span>
         </div>
@@ -153,104 +153,150 @@ class ="active"
 <!-- Chart.js Library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<!-- cdn web socket -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
 <script>
-    // fungsi date picker
+    let socket;
+
+    // inisiasi socket
+    function initializeSocket(){
+        socket = io('/dashboard');
+        socket.on('connect', function(){
+            console.log('dashboard konek socket cuy');
+        })
+        socket.on('disconnect', function(){
+            console.log('walawe dashboard ga konek socket ');
+        })
+        socket.on('sensor_update', function(res){
+            if (res.type === 'realtime' && res.data) {
+                updateRealtimeData(res.data);
+            }
+        })
+
+    }
+
+    // update realtime data
+    function updateRealtimeData(data) {
+        document.getElementById('ph_value').textContent = data.ph ? data.ph.toFixed(2) : 'N/A';
+        document.getElementById('suhu_value').textContent = data.suhu ? data.suhu.toFixed(1) : 'N/A';
+        document.getElementById('tds_value').textContent = data.tds ? data.tds.toFixed(0) : 'N/A';
+        document.getElementById('turbidity_value').textContent = data.turbidity ? data.turbidity.toFixed(2) : 'N/A';
+
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeSocket(); // Initialize socket di web page
+    });
+</script>
+
+<script>
     flatpickr("#tanggalAwal", {
-        dateFormat: "d/m/Y"
+        dateFormat: "d/m/Y",
     });
     flatpickr("#tanggalAkhir", {
-        dateFormat: "d/m/Y"
+        dateFormat: "d/m/Y",
     });
 
-    // dumny data charts sementara
+        // dumny data charts sementara
     const sampleData = {
-        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-        datasets: [{
-            data: [7, 6.8, 7.2, 6.9, 7.1, 6.7, 7.3, 6.8, 7.0, 6.9],
-            backgroundColor: 'rgba(46, 196, 182, 0.6)',
-            borderColor: 'rgba(46, 196, 182, 1)',
-            borderWidth: 2,
-            fill: true
-        }]
+    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    datasets: [
+        {
+        data: [7, 6.8, 7.2, 6.9, 7.1, 6.7, 7.3, 6.8, 7.0, 6.9],
+        backgroundColor: "rgba(46, 196, 182, 0.6)",
+        borderColor: "rgba(46, 196, 182, 1)",
+        borderWidth: 2,
+        fill: true,
+        },
+    ],
     };
 
     const chartConfig = {
-        type: 'line',
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: false
-                }
-            }
-        }
+    type: "line",
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+        legend: {
+            display: false,
+        },
+        },
+        scales: {
+        y: {
+            beginAtZero: false,
+        },
+        },
+    },
     };
 
     // Create PH Chart
-    const phCtx = document.getElementById('phChart').getContext('2d');
+    const phCtx = document.getElementById("phChart").getContext("2d");
     new Chart(phCtx, {
-        ...chartConfig,
-        data: {
-            ...sampleData,
-            datasets: [{
-                ...sampleData.datasets[0],
-            backgroundColor: 'rgba(46, 196, 182, 0.6)',
-            borderColor: 'rgba(46, 196, 182, 1)'
-        }]
-    }
-});
-
-// Create Suhu Chart
-const suhuCtx = document.getElementById('suhuChart').getContext('2d');
-new Chart(suhuCtx, {
     ...chartConfig,
     data: {
         ...sampleData,
-        datasets: [{
+        datasets: [
+        {
+            ...sampleData.datasets[0],
+            backgroundColor: "rgba(46, 196, 182, 0.6)",
+            borderColor: "rgba(46, 196, 182, 1)",
+        },
+        ],
+    },
+    });
+
+    // Create Suhu Chart
+    const suhuCtx = document.getElementById("suhuChart").getContext("2d");
+    new Chart(suhuCtx, {
+    ...chartConfig,
+    data: {
+        ...sampleData,
+        datasets: [
+        {
             ...sampleData.datasets[0],
             data: [25, 26, 24, 27, 25, 26, 24, 25, 26, 25],
-            backgroundColor: 'rgba(255, 166, 48, 0.6)',
-            borderColor: 'rgba(255, 166, 48, 1)'
-        }]
-    }
-});
+            backgroundColor: "rgba(255, 166, 48, 0.6)",
+            borderColor: "rgba(255, 166, 48, 1)",
+        },
+        ],
+    },
+    });
 
-// Create TDS Chart
-const tdsCtx = document.getElementById('tdsChart').getContext('2d');
-new Chart(tdsCtx, {
+    // Create TDS Chart
+    const tdsCtx = document.getElementById("tdsChart").getContext("2d");
+    new Chart(tdsCtx, {
     ...chartConfig,
     data: {
         ...sampleData,
-        datasets: [{
+        datasets: [
+        {
             ...sampleData.datasets[0],
             data: [150, 145, 160, 155, 150, 140, 165, 150, 145, 155],
-            backgroundColor: 'rgba(46, 196, 182, 0.6)',
-            borderColor: 'rgba(46, 196, 182, 1)'
-        }]
-    }
-});
+            backgroundColor: "rgba(46, 196, 182, 0.6)",
+            borderColor: "rgba(46, 196, 182, 1)",
+        },
+        ],
+    },
+    });
 
-// Create Turbidity Chart
-const turbidityCtx = document.getElementById('turbidityChart').getContext('2d');
-new Chart(turbidityCtx, {
+    // Create Turbidity Chart
+    const turbidityCtx = document.getElementById("turbidityChart").getContext("2d");
+    new Chart(turbidityCtx, {
     ...chartConfig,
     data: {
         ...sampleData,
-        datasets: [{
+        datasets: [
+        {
             ...sampleData.datasets[0],
             data: [2, 1.8, 2.2, 1.9, 2.1, 1.7, 2.3, 1.8, 2.0, 1.9],
-            backgroundColor: 'rgba(255, 166, 48, 0.6)',
-            borderColor: 'rgba(255, 166, 48, 1)'
-        }]
-    }
-});
-</script>
+            backgroundColor: "rgba(255, 166, 48, 0.6)",
+            borderColor: "rgba(255, 166, 48, 1)",
+        },
+        ],
+    },
+    });
 
+</script>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, session
-from app.controller.user_controller import UserController
+from app.controller.sensor_controller import SensorController
 from app.utils.auth_utils import web_session_required
 
 # Create blueprint
