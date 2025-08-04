@@ -3,7 +3,8 @@
 {% block styles %}
 <link rel="stylesheet" href="../static/css/dashboard.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
 {% endblock %}
 
 <!-- dumb ways but its works xixixi -->
@@ -67,7 +68,7 @@ class ="active"
         </div>
         <div class="input-container">
             <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
-            <input type="text" class="btn btn-filter" placeholder="Granulitas">
+            <input id="granulitas" type="text" class="btn btn-filter" placeholder="Granulitas" readonly>
         </div>
     </div>
 
@@ -149,13 +150,45 @@ class ="active"
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
 
-<!-- Chart.js Library -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const granulitas = document.getElementById('granulitas');
+    const opsi = ['10 menit', '30 menit', '1 jam', '6 jam', '12 jam', '1 hari', '1 minggu', '1 bulan'];
+
+    const dropdownContent = document.createElement('div');
+    dropdownContent.style.display = 'flex';
+    dropdownContent.style.flexDirection = 'column';
+    // dropdownContent.style.color = 'var(--hitam)';
+    // dropdownContent.style.backgroundColor = 'var(--primary)';
+
+    opsi.forEach(option => {
+        const item = document.createElement('div');
+        item.textContent = option;
+        item.style.padding = '1rem 0rem';
+        item.style.width = '13rem';
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => {
+            granulitas.value = option;
+            instance.hide();
+        });
+        dropdownContent.appendChild(item);
+    });
+
+    const instance = tippy(granulitas, {
+        content: dropdownContent,
+        trigger: 'click',
+        interactive: true,
+        placement: 'bottom-start',
+        arrow: false,
+        theme: 'light',
+  });
+</script>
+
 
 <!-- cdn web socket -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-
 <script>
     let socket;
 
@@ -190,6 +223,9 @@ class ="active"
     });
 </script>
 
+
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     flatpickr("#tanggalAwal", {
         dateFormat: "d/m/Y",

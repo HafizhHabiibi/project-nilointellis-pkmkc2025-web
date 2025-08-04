@@ -105,16 +105,13 @@
   font-weight: 600;
   font-size: 1rem;
   border: 0.15rem solid var(--ijo-sage);
-
-  /* backup */
-
-  /* background-image: url('../assets/box_tanggal.svg');
-  background-size: cover ;
-  background-repeat: no-repeat; */
 }
 
 .dropdown-filter-svg {
   transform: translate(13.5rem, -1.3rem);
+}
+.dropdown-filter-svg:hover {
+  transform: rotate(180deg) translate(-13.5rem, 1.3rem);
 }
 
 .btn-filter::placeholder {
@@ -126,8 +123,11 @@
   background-image: none;
   background-color: var(--ijo-pucat);
   border-color: var(--ijo-sage);
-  color: var(--primary);
+  color: var(--hitam);
 }
+
+/* granulitas */
+
 
 /* Statistics Table */
 .statistics-table {
