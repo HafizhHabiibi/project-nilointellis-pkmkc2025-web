@@ -51,3 +51,35 @@ class SensorController:
       except Exception as e:
           print(f"Error in realtime worker: {e}")
           time.sleep(5)
+
+class SensorData:
+    def __init__(self):
+       self.sensorModel = SensorModel()
+
+    # def get_data(self):
+    def get_data_ringkasan(self, tanggal_awal, tanggal_akhir, granulitas):
+      try:
+        if tanggal_awal and tanggal_akhir:
+          tanggal_awal = datetime.strptime(tanggal_awal, '%d/%m/%Y')
+          tanggal_akhir = datetime.strptime(tanggal_akhir, '%d/%m/%Y')
+          tanggal_akhir = tanggal_akhir.replace(hour=23, minute=59, second=59)
+        else:
+          # default hari ini biar ga error
+          tanggal_akhir = datetime.utcnow()
+          tanggal_awal = tanggal_akhir.replace(hour=0, minute=0, second=0)
+
+        data = self.sensorModel.get_sensor_statistik(tanggal_awal, tanggal_akhir, granulitas)
+        if data:
+          for item in data:
+            item['id'] = str(item['_id'])
+            item['timestamp'] = item['timestamp'].isoformat()
+            del item['_id']
+          return data
+
+        else:
+          print("No data found for the given date range.")
+          return []
+
+      except Exception as e:
+        print(f"Error getting sensor summary: {e}")
+        return {'error': str(e)}

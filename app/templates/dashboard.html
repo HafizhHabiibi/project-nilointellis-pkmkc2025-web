@@ -58,18 +58,20 @@ class ="active"
 
     <!-- Filter Tanggal -->
     <div class="filter-controls">
-        <div class="input-container">
-            <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
-            <input type="text" id="tanggalAwal" placeholder="Tanggal Awal" class="btn btn-filter">
-        </div>
-        <div class="input-container">
-            <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
-            <input type="text" id="tanggalAkhir" placeholder="Tanggal Akhir" class="btn btn-filter">
-        </div>
-        <div class="input-container">
-            <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
-            <input id="granulitas" type="text" class="btn btn-filter" placeholder="Granulitas" readonly>
-        </div>
+        <form class="filter-controls" id="filterForm" method="POST" action="/dashboard/filter">
+            <div class="input-container">
+                <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
+                <input type="text" id="tanggalAwal" name="tanggal_awal" placeholder="Tanggal Awal" class="btn btn-filter">
+            </div>
+            <div class="input-container">
+                <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
+                <input type="text" id="tanggalAkhir" name="tanggal_akhir" placeholder="Tanggal Akhir" class="btn btn-filter">
+            </div>
+            <div class="input-container">
+                <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
+                <input id="granulitas" name="granulitas" type="text" class="btn btn-filter" placeholder="Granulitas" readonly>
+            </div>
+        </form>
     </div>
 
     <!-- Ringkasan Statistik -->
@@ -88,27 +90,27 @@ class ="active"
                 <tr>
                     <td>PH</td>
                     <!-- sementara, ntar ganti pake data dynamic -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="phMax">-</td>
+                    <td id="phMin">-</td>
+                    <td id="phAvg">-</td>
                 </tr>
                 <tr>
                     <td>Suhu</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="suhuMax">-</td>
+                    <td id="suhuMin">-</td>
+                    <td id="suhuAvg">-</td>
                 </tr>
                 <tr>
                     <td>TDS</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="tdsMax">-</td>
+                    <td id="tdsMin">-</td>
+                    <td id="tdsAvg">-</td>
                 </tr>
                 <tr>
                     <td>Turbidity</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="turbidityMax">-</td>
+                    <td id="turbidityMin">-</td>
+                    <td id="turbidityAvg">-</td>
                 </tr>
             </tbody>
         </table>
@@ -154,8 +156,28 @@ class ="active"
 <script src="https://unpkg.com/tippy.js@6"></script>
 
 <script>
+    const phMax = document.getElementById('phMax');
+    const phMin = document.getElementById('phMin');
+    const phAvg = document.getElementById('phAvg');
+    const suhuMax = document.getElementById('suhuMax');
+    const suhuMin = document.getElementById('suhuMin');
+    const suhuAvg = document.getElementById('suhuAvg');
+    const tdsMax = document.getElementById('tdsMax');
+    const tdsMin = document.getElementById('tdsMin');
+    const tdsAvg = document.getElementById('tdsAvg');
+    const turbidityMax = document.getElementById('turbidityMax');
+    const turbidityMin = document.getElementById('turbidityMin');
+    const turbidityAvg = document.getElementById('turbidityAvg');
+
+
+    flatpickr("#tanggalAwal", {
+        dateFormat: "d/m/Y",
+    });
+    flatpickr("#tanggalAkhir", {
+        dateFormat: "d/m/Y",
+    });
     const granulitas = document.getElementById('granulitas');
-    const opsi = ['10 menit', '30 menit', '1 jam', '6 jam', '12 jam', '1 hari', '1 minggu', '1 bulan'];
+    const opsi = ['1 menit','5 menit','10 menit', '30 menit', '1 jam', '6 jam', '12 jam', 'hari', 'minggu', 'bulan'];
 
     const dropdownContent = document.createElement('div');
     dropdownContent.style.display = 'flex';
@@ -172,6 +194,7 @@ class ="active"
         item.addEventListener('click', () => {
             granulitas.value = option;
             instance.hide();
+            submitForm(); // submit form waktu opsi dipilih
         });
         dropdownContent.appendChild(item);
     });
@@ -184,6 +207,96 @@ class ="active"
         arrow: false,
         theme: 'light',
   });
+
+
+    function submitForm() {
+    // document.getElementById('filterForm').submit();
+
+    const form = document.getElementById('filterForm');
+    const formData = new FormData(form);
+    fetch ('/dashboard/filter', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log(data.data);
+            updateStatistiktabel(data.data);
+            // updateDashboardWithFilteredData(data.data);
+            // updateCharts(data.data);
+        } else {
+            // alert('Tidak ada data ditemukan');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan');
+    });
+}
+
+function updateStatistiktabel(data){
+    const stats = hitungStatistik(data);
+
+    // Update PH statistics
+    document.getElementById('phMax').textContent = stats.ph.max;
+    document.getElementById('phMin').textContent = stats.ph.min;
+    document.getElementById('phAvg').textContent = stats.ph.avg;
+
+    // Update Suhu statistics
+    document.getElementById('suhuMax').textContent = stats.suhu.max;
+    document.getElementById('suhuMin').textContent = stats.suhu.min;
+    document.getElementById('suhuAvg').textContent = stats.suhu.avg;
+
+    // Update TDS statistics
+    document.getElementById('tdsMax').textContent = stats.tds.max;
+    document.getElementById('tdsMin').textContent = stats.tds.min;
+    document.getElementById('tdsAvg').textContent = stats.tds.avg;
+
+    // Update Turbidity statistics
+    document.getElementById('turbidityMax').textContent = stats.turbidity.max;
+    document.getElementById('turbidityMin').textContent = stats.turbidity.min;
+    document.getElementById('turbidityAvg').textContent = stats.turbidity.avg;
+}
+
+function hitungStatistik(data){
+    if (!data || data.length === 0) {
+        return {
+            ph: { min: 0, max: 0, avg: 0 },
+            suhu: { min: 0, max: 0, avg: 0 },
+            tds: { min: 0, max: 0, avg: 0 },
+            turbidity: { min: 0, max: 0, avg: 0 }
+        };
+    }
+
+    // ambil nilai data per jenis nya
+    const phValues = data.map(item => item.ph).filter(val => val !== null && val !== undefined);
+    const suhuValues = data.map(item => item.suhu).filter(val => val !== null && val !== undefined);
+    const tdsValues = data.map(item => item.tds).filter(val => val !== null && val !== undefined);
+    const turbidityValues = data.map(item => item.turbidity).filter(val => val !== null && val !== undefined);
+
+    // Helper function to calculate min, max, avg
+    function getStats(values) {
+        if (values.length === 0) return { min: 0, max: 0, avg: 0 };
+
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        const avg = values.reduce((sum, val) => sum + val, 0) / values.length;
+
+        return {
+            min: parseFloat(min.toFixed(2)),
+            max: parseFloat(max.toFixed(2)),
+            avg: parseFloat(avg.toFixed(2))
+        };
+    }
+
+    return {
+        ph: getStats(phValues),
+        suhu: getStats(suhuValues),
+        tds: getStats(tdsValues),
+        turbidity: getStats(turbidityValues)
+    };
+}
 </script>
 
 
@@ -227,12 +340,7 @@ class ="active"
 <!-- Chart.js Library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    flatpickr("#tanggalAwal", {
-        dateFormat: "d/m/Y",
-    });
-    flatpickr("#tanggalAkhir", {
-        dateFormat: "d/m/Y",
-    });
+
 
         // dumny data charts sementara
     const sampleData = {
