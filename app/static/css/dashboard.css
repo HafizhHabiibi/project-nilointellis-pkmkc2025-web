@@ -16,6 +16,7 @@
   text-align: center;
   height: fit-content;
   margin: 2rem 0;
+  margin-left: 3.5rem;
   overflow: auto;
   scroll-snap-type: both mandatory;
   white-space: nowrap;
@@ -38,7 +39,7 @@
   border-radius: 0.75rem; /* 12px */
   padding: 1.5rem 3rem; /* 15px 20px */
   background-color: var(--primary);
-  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3); /* 3px 3px */
+  box-shadow: 0rem 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3); /* 3px 3px */
   flex: 1 1 calc(25% - 0.75rem);
   min-width: 200px;
   max-width: 300px;
@@ -47,7 +48,7 @@
 
 .boxes .box .text{
   white-space: nowrap;
-  font-size: 0.9rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--hitam);
 }
@@ -59,7 +60,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.2rem;
 }
 
 .boxes .box .imgLogo{
@@ -94,17 +95,20 @@
 .filter-controls {
   display: flex;
   justify-content: right;
-  margin: 2rem 0;
+  margin: 1rem 0;
   margin-bottom: 0.5rem;
+  gap: 1rem;
 }
 
 .btn-filter {
+  width: 100%;
   color: var(--hitam);
   padding: 1.4rem 0rem;
   border-radius: 0.5rem;
   font-weight: 600;
   font-size: 1rem;
   border: 0.15rem solid var(--ijo-sage);
+  box-sizing: border-box;
 }
 
 .dropdown-filter-svg {
@@ -234,7 +238,34 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 2560px) {
+  .container {
+    max-width: 2560px;
+  }
+
+  .container .boxes {
+    gap: 0.9rem;
+  }
+
+  .container .boxes .box {
+    flex: 1 1 calc(50% - 0.45rem);
+    min-width: 320px;
+    max-width: none;
+    padding: 1.2rem 2.5rem;
+  }
+
+  .boxes .box .number {
+    font-size: 2.4rem;
+  }
+
+  .boxes .box .imgLogo {
+    width: 3.2rem;
+    height: 3.2rem;
+    margin-left: 1.2rem;
+  }
+}
+
+@media (max-width: 1440px) {
   .container .boxes {
     gap: 0.8rem;
   }
@@ -255,6 +286,10 @@
     height: 3.2rem;
     margin-left: 1.2rem;
   }
+
+  .chart-row {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 992px) {
@@ -269,7 +304,7 @@
   }
 
   .boxes .box .text {
-    font-size: 0.87rem;
+    font-size: 1.1rem;
   }
 
   .boxes .box .number {
@@ -299,7 +334,7 @@
   }
 
   .boxes .box .text {
-    font-size: 0.85rem;
+    font-size: 1.2rem;
   }
 
   .boxes .box .number {
@@ -317,10 +352,6 @@
     gap: 0.5rem;
   }
 
-  .chart-row {
-    flex-direction: column;
-  }
-
   .statistics-table {
     overflow-x: auto;
   }
@@ -334,7 +365,7 @@
 
 @media (max-width: 576px) {
   .container {
-    width: 95%;
+    width: auto;
     margin: 1rem 0;
   }
 
@@ -343,7 +374,7 @@
   }
 
   .boxes .box .text {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
   }
 
   .boxes .box .number {
@@ -372,7 +403,7 @@
   }
 
   .boxes .box .text {
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
 
   .boxes .box .number {
@@ -392,7 +423,7 @@
   }
 
   .boxes .box .text {
-    font-size: 0.7rem;
+    font-size: 0.95rem;
   }
 
   .boxes .box .number {

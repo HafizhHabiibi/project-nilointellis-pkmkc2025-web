@@ -128,3 +128,18 @@
   height: 25rem;
   margin-bottom: 1rem;
 }
+
+/* TV */
+@media (max-width: 2560px) {
+  .container {
+    max-width: 2560px;
+    }
+  }
+
+/* Mobile */
+@media (max-width: 450px) { 
+    .container {
+        width: 100%;
+        margin-left: 0;
+    }   
+  }
