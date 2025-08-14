@@ -17,7 +17,7 @@ class ="active"
 <div class="container">
     <div class="boxes">
         <div class="box box_1">
-            <span class="text">pH Air</span>
+            <span class="text">PH Air</span>
             <span class="number">
                 <span id="ph_value">N/A</span>
                 <img class="imgLogo" src="../static/assets/Vector ph.svg" alt="PH air">
@@ -31,14 +31,14 @@ class ="active"
             </span>
         </div>
         <div class="box box_3">
-            <span class="text">Padatan Terlarut</span>
+            <span class="text">TDS</span>
             <span class="number">
                 <span id="tds_value">N/A</span>
                 <img class="imgLogo" src="../static/assets/Vector TDS.svg" alt="">
             </span>
         </div>
         <div class="box box_4">
-            <span class="text">Kekeruhan Air</span>
+            <span class="text">Turbidity</span>
             <span class="number">
                 <span id="turbidity_value">N/A</span>
                 <img class="imgLogo" src="../static/assets/Vector turbidity.svg" alt="">
@@ -60,16 +60,16 @@ class ="active"
     <div class="filter-controls">
         <form class="filter-controls" id="filterForm" method="POST" action="/dashboard/filter">
             <div class="input-container">
-                <!-- <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg> -->
+                <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
                 <input type="text" id="tanggalAwal" name="tanggal_awal" placeholder="Tanggal Awal" class="btn btn-filter">
             </div>
             <div class="input-container">
-                <!-- <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg> -->
+                <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
                 <input type="text" id="tanggalAkhir" name="tanggal_akhir" placeholder="Tanggal Akhir" class="btn btn-filter">
             </div>
             <div class="input-container">
-                <!-- <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg> -->
-                <input id="granulitas" name="granulitas" type="text" class="btn btn-filter" placeholder="Granulitas" readonly role="combobox" aria-haspopup="listbox" aria-expanded="false">
+                <svg class="dropdown-filter-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><path fill="#2EC4B6" d="M19.778 12a7.778 7.778 0 1 0-15.556 0a7.778 7.778 0 0 0 15.556 0m-5.23-2.452a1.11 1.11 0 1 1 1.57 1.57l-3.332 3.334a1.11 1.11 0 0 1-1.572 0L7.881 11.12l-.076-.085a1.11 1.11 0 0 1 1.563-1.562l.084.076L12 12.095zM22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/></svg>
+                <input id="granulitas" name="granulitas" type="text" class="btn btn-filter" placeholder="Granulitas" readonly>
             </div>
         </form>
     </div>
@@ -172,11 +172,9 @@ class ="active"
 
     flatpickr("#tanggalAwal", {
         dateFormat: "d/m/Y",
-        disableMobile: true,
     });
     flatpickr("#tanggalAkhir", {
         dateFormat: "d/m/Y",
-        disableMobile: true
     });
     const granulitas = document.getElementById('granulitas');
     const opsi = ['1 menit','5 menit','10 menit', '30 menit', '1 jam', '6 jam', '12 jam', 'hari', 'minggu', 'bulan'];
