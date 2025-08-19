@@ -27,3 +27,6 @@ class Config:
     # Session Timeout - otomatis expire setelah 1 jam tidak aktif
     SESSION_TIMEOUT_HOURS = int(os.environ.get('SESSION_TIMEOUT_HOURS', 1))
     PERMANENT_SESSION_LIFETIME = timedelta(hours=SESSION_TIMEOUT_HOURS)
+
+    # Telegram Token
+    TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")

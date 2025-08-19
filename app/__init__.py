@@ -9,6 +9,8 @@ from app.routes.dashboard_route import dashboard_bp
 from app.routes.prediksi_route import prediksi_bp
 from app.routes.monitoring_route import monitoring_bp
 from app.routes.chatbot_route import chatbot_bp
+from app.routes.telegram_route import telegram_bp
+from app.routes.sensor_route import sensor_bp
 
 def create_app():
     app = Flask(__name__)
@@ -27,6 +29,8 @@ def create_app():
     app.register_blueprint(prediksi_bp)
     app.register_blueprint(monitoring_bp)
     app.register_blueprint(chatbot_bp)
+    app.register_blueprint(telegram_bp)
+    app.register_blueprint(sensor_bp)
 
     return app, websocket
 
