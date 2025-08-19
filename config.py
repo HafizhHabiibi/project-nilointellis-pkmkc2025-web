@@ -30,3 +30,9 @@ class Config:
 
     # Telegram Token
     TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+    
+    # AI Configuration
+    AI_RECOMMENDED_API_KEY= os.environ.get('AI_RECOMMENDED_API_KEY')
+    CHART_ANALYST_AI_API_KEY = os.environ.get('CHART_ANALYST_AI_API_KEY')
+    DEATH_ANALYST_AI_API_KEY = os.environ.get('DEATH_ANALYST_AI_API_KEY')
+    CHATBOT_API_KEY = os.environ.get('CHATBOT_API_KEY')

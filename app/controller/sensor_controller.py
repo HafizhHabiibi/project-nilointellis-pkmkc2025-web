@@ -6,7 +6,7 @@ import threading
 from datetime import datetime
 
 class SensorController:
-  def __init__(self, websocket):
+  def __init__(self, websocket=None):
     self.websocket = websocket
     self.sensor_model = SensorModel()
     self.is_running = False
