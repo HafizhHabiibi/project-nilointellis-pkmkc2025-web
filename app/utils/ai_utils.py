@@ -1,4 +1,5 @@
 from google import genai
+from zai import ZhipuAiClient
 from markupsafe import Markup
 import re
 import markdown2
@@ -38,6 +39,37 @@ def get_ai_response(api_key, model_name, prompt, temperature=0.25, top_p=0.85, t
     )
     
     return get_text_from_response(response)
+
+def get_ai_reply(api_key, model_name, prompt, temperature=0.7):
+    """
+    Fungsi untuk mendapatkan respons AI dengan konfigurasi model default.
+    
+    Args:
+        api_key (str): API key untuk autentikasi
+        model_name (str): nama model yang digunakan
+        prompt (str): teks prompt untuk AI
+        temperature (float): Pengaturan suhu untuk variasi output (0.0 to 1.0)
+        top_p (float): Pengaturan top-p untuk sampling (0.0 to 1.0)
+        top_k (int): Pengaturan top-k untuk sampling (0 to N)
+    
+    Returns:
+        str: Teks hasil respons AI yang telah dibersihkan dari format markdown.
+    """
+    
+    # Initialize client
+    client = ZhipuAiClient(api_key=api_key)
+    
+    # Generate content
+    response = client.chat.completions.create(
+                    model=model_name,
+                    messages=prompt,
+                    temperature=temperature
+                )
+    
+    message = response.choices[0].message.content
+
+    # Get the text from the response
+    return format_bot_message(message)
 
 # Helper functions remain the same
 def clean_markdown(text):
