@@ -1,15 +1,15 @@
 * {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    --primary: #FFFFFF;
-    --salmon: #FFA630;
-    --salmon-terang: #FECD8D;
-    --ijo-sage: #2EC4B6;
-    --ijo-pucat: #CBF3F0;
-    --hitam: #1b1b1b;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  --primary: #FFFFFF;
+  --salmon: #FFA630;
+  --salmon-terang: #FECD8D;
+  --ijo-sage: #2EC4B6;
+  --ijo-pucat: #CBF3F0;
+  --hitam: #1b1b1b;
 }
 
-.container{
+.container {
   color: var(--hitam);
   background-color: #fff;
   width: 90%;
@@ -22,8 +22,10 @@
   justify-content: center;
   align-items: center;
 }
-.container .boxes{
-  margin-top: 0.9375rem; /* 15px */
+
+.container .boxes {
+  margin-top: 0.9375rem;
+  /* 15px */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -33,27 +35,32 @@
 .container .boxes .box {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.25rem; /* 20px */
+  margin-bottom: 1.25rem;
+  /* 20px */
   align-items: center;
-  border-radius: 0.75rem; /* 12px */
-  padding: 1.5rem 3rem; /* 15px 20px */
+  border-radius: 0.75rem;
+  /* 12px */
+  padding: 1.5rem 3rem;
+  /* 15px 20px */
   background-color: var(--primary);
-  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3); /* 3px 3px */
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3);
+  /* 3px 3px */
   flex: 1 1 calc(25% - 0.75rem);
   min-width: 200px;
   max-width: 300px;
   transition: all 0.3s ease;
 }
 
-.boxes .box .text{
+.boxes .box .text {
   white-space: nowrap;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--hitam);
 }
 
-.boxes .box .number{
-  font-size: 2rem; /* 36px */
+.boxes .box .number {
+  font-size: 2rem;
+  /* 36px */
   font-weight: 600;
   color: var(--hitam);
   display: flex;
@@ -62,31 +69,35 @@
   gap: 0.5rem;
 }
 
-.boxes .box .imgLogo{
-  width: 3.75rem; /* 60px */
-  height: 3.75rem; /* 60px */
-  margin-left: 1.5rem; /* 10px */
+.boxes .box .imgLogo {
+  width: 3.75rem;
+  /* 60px */
+  height: 3.75rem;
+  /* 60px */
+  margin-left: 1.5rem;
+  /* 10px */
   object-fit: contain;
   flex-shrink: 0;
 }
 
-.boxSaran{
+.boxSaran {
   background-color: var(--primary);
   border: none;
   font-size: 1.5rem;
   margin-bottom: 2rem;
   padding: 1rem;
   border-radius: 10px;
-  box-shadow: 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.3); /* 3px 3px */
+  box-shadow: 0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.3);
+  /* 3px 3px */
 
 }
 
-.boxSaran:hover{
+.boxSaran:hover {
   color: var(--primary);
   background-color: var(--hitam);
 }
 
-.bintang_saran{
+.bintang_saran {
   transform: translate(0.5rem, -0.7rem);
 }
 
@@ -110,6 +121,7 @@
 .dropdown-filter-svg {
   transform: translate(13.5rem, -1.3rem);
 }
+
 .dropdown-filter-svg:hover {
   transform: rotate(180deg) translate(-13.5rem, 1.3rem);
 }
@@ -169,7 +181,44 @@
 }
 
 /* Charts Section */
+
 .charts-section {
+  margin: 2rem 0;
+}
+
+.chart-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chart-container {
+  flex: 1;
+  background-color: var(--primary);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.3);
+  height: 280px;
+  /* tinggi seragam */
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-container h5 {
+  color: var(--hitam);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  text-align: left;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+  height: 200px !important;
+  /* semua grafik sama tinggi */
+}
+
+
+/* .charts-section {
   margin: 2rem 0;
 }
 
@@ -196,7 +245,7 @@
 
 .chart-container canvas {
   height: 200px !important;
-}
+} */
 
 /* AI Analysis Button */
 .ai-analysis {
@@ -220,16 +269,19 @@
   color: var(--primary);
 }
 
-.svg-bintang{
+.svg-bintang {
   transform: translate(0.1rem, -0.7rem);
 }
 
 /* SVG Responsive Styles */
-.bintang_saran, .dropdown-filter-svg, .svg-bintang {
+.bintang_saran,
+.dropdown-filter-svg,
+.svg-bintang {
   transition: transform 0.2s ease;
 }
 
-.bintang_saran:hover, .svg-bintang:hover {
+.bintang_saran:hover,
+.svg-bintang:hover {
   transform: scale(1.1);
 }
 
@@ -333,6 +385,33 @@
 }
 
 @media (max-width: 576px) {
+  .filter-controls{
+    margin-bottom: 1rem;
+  }
+  .input-container {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .input-container input {
+    width: 100%;
+    padding-right: 2.5rem;
+    /* kasih ruang buat ikon */
+    box-sizing: border-box;
+  }
+
+  .input-container .dropdown-filter-svg {
+    position: absolute;
+    right: 25px;
+    /* jarak dari kanan */
+    top: 50%;
+    transform: translateY(-50%);
+    /* biar selalu center vertikal */
+    pointer-events: none;
+    /* biar klik tetap ke input */
+  }
+
   .container {
     width: 95%;
     margin: 1rem 0;
