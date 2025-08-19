@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, session
 from app.controller.sensor_controller import SensorController, SensorData
 from app.utils.auth_utils import web_session_required
+from app.utils.ai_utils import get_ai_response
+from app.utils.prompt_utils import ai_recommendation_prompt
+from config import Config
 
 # Create blueprint
 dashboard_bp = Blueprint('dashboard', __name__)
@@ -41,3 +44,40 @@ def filter_dashboard():
     except Exception as e:
         print(f"Error getting sensor data: {e}")
         return jsonify({'error': 'Failed to get sensor data'}), 500
+
+# Route to get AI recommendation based on latest sensor data
+@dashboard_bp.route('/dashboard/get-ai-recommendation', methods=['POST'])
+@web_session_required
+def get_ai_recommendation():
+    try:
+        # Ambil data sensor terakhir
+        sensor_controller = SensorController()
+        latest_data = sensor_controller.get_realtime()
+        
+        if not latest_data:
+            return jsonify({
+                'status': 'error',
+                'message': 'No sensor data available'
+            }), 404
+
+        # Bangun prompt
+        prompt = ai_recommendation_prompt(latest_data)
+
+        # Panggil AI
+        recommendation = get_ai_response(
+            api_key=Config.AI_RECOMMENDED_API_KEY,
+            model_name="gemini-2.5-flash",
+            prompt=prompt
+        )
+        
+        return jsonify({
+            'status': 'success',
+            'recommendation': str(recommendation)
+        }), 200
+
+    except Exception as e:
+        print(f"Error getting AI recommendation: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': 'AI sedang mengalami masalah, silakan coba lagi nanti.'
+        }), 500

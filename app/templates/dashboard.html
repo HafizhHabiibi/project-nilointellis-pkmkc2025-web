@@ -48,10 +48,36 @@ class ="active"
 
     <!-- Button Dapatkan Saran -->
     <div class="col-md-4">
-        <button class="btn btn-light fw-bold w-100 mt-4 boxSaran">
+        <button class="btn btn-light fw-bold w-100 mt-4 boxSaran" onclick="getAIRecommendation()">
             <svg class="bintang_saran" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><g fill="none"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="#2EC4B6" d="M9.107 5.448c.598-1.75 3.016-1.803 3.725-.159l.06.16l.807 2.36a4 4 0 0 0 2.276 2.411l.217.081l2.36.806c1.75.598 1.803 3.016.16 3.725l-.16.06l-2.36.807a4 4 0 0 0-2.412 2.276l-.081.216l-.806 2.361c-.598 1.75-3.016 1.803-3.724.16l-.062-.16l-.806-2.36a4 4 0 0 0-2.276-2.412l-.216-.081l-2.36-.806c-1.751-.598-1.804-3.016-.16-3.724l.16-.062l2.36-.806A4 4 0 0 0 8.22 8.025l.081-.216zM19 2a1 1 0 0 1 .898.56l.048.117l.35 1.026l1.027.35a1 1 0 0 1 .118 1.845l-.118.048l-1.026.35l-.35 1.027a1 1 0 0 1-1.845.117l-.048-.117l-.35-1.026l-1.027-.35a1 1 0 0 1-.118-1.845l.118-.048l1.026-.35l.35-1.027A1 1 0 0 1 19 2"/></g></svg>
             Dapatkan Saran
         </button>
+    </div>
+
+    <!-- Modal AI Recommendation -->
+    <div class="modal fade" id="aiRecModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight:700">Saran dari AI</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="aiRecLoading" class="text-center d-none">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Mohon Tunggu Sebentar, AI sedang berpikir...</p>
+                    </div>
+                    <div id="aiRecContent" 
+                        style="max-height:500px; overflow-y:auto; overflow-x:hidden; white-space:pre-wrap; word-wrap:break-word; text-align:left; display:flex; flex-direction: column; gap: 1rem; font-size: 1.1rem; line-height: 1.6;">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Filter Controls -->
@@ -206,8 +232,37 @@ class ="active"
         placement: 'bottom-start',
         arrow: false,
         theme: 'light',
-  });
+    });
 
+    // jawaban rekomendasi AI
+    function getAIRecommendation() {
+        const modal = new bootstrap.Modal(document.getElementById('aiRecModal'));
+        modal.show();
+
+        // tampilkan spinner, kosongkan konten lama
+        document.getElementById('aiRecLoading').classList.remove('d-none');
+        document.getElementById('aiRecContent').innerHTML = '';
+
+        fetch('/dashboard/get-ai-recommendation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('aiRecLoading').classList.add('d-none');
+            if (data.status === 'success') {
+                document.getElementById('aiRecContent').innerHTML = data.recommendation;
+            } else {
+                document.getElementById('aiRecContent').innerHTML = 
+                    `<div class="alert alert-danger">Gagal: ${data.message}</div>`;
+            }
+        })
+        .catch(error => {
+            document.getElementById('aiRecLoading').classList.add('d-none');
+            document.getElementById('aiRecContent').innerHTML = 
+                `<div class="alert alert-danger">Error: ${error}</div>`;
+        });
+    }
 
     function submitForm() {
     // document.getElementById('filterForm').submit();
