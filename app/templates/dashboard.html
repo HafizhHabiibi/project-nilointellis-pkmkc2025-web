@@ -69,7 +69,7 @@ class ="active"
                         </div>
                         <p class="mt-2">Mohon Tunggu Sebentar, AI sedang berpikir...</p>
                     </div>
-                    <div id="aiRecContent" 
+                    <div id="aiRecContent"
                         style="max-height:500px; overflow-y:auto; overflow-x:hidden; white-space:pre-wrap; word-wrap:break-word; text-align:left; display:flex; flex-direction: column; gap: 1rem; font-size: 1.1rem; line-height: 1.6;">
                     </div>
                 </div>
@@ -181,6 +181,46 @@ class ="active"
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://unpkg.com/tippy.js@6"></script>
 
+<!-- cdn web socket -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    let socket;
+
+    // inisiasi socket
+    function initializeSocket(){
+        socket = io('/dashboard');
+        socket.on('connect', function(){
+            console.log('dashboard konek socket cuy');
+        })
+        socket.on('disconnect', function(){
+            console.log('walawe dashboard ga konek socket ');
+        })
+        socket.on('sensor_update', function(res){
+            if (res.type === 'realtime' && res.data) {
+                updateRealtimeData(res.data);
+            }
+        })
+
+    }
+
+    // update realtime data
+    function updateRealtimeData(data) {
+        document.getElementById('ph_value').textContent = data.ph ? data.ph.toFixed(2) : 'N/A';
+        document.getElementById('suhu_value').textContent = data.suhu ? data.suhu.toFixed(1) : 'N/A';
+        document.getElementById('tds_value').textContent = data.tds ? data.tds.toFixed(0) : 'N/A';
+        document.getElementById('turbidity_value').textContent = data.turbidity ? data.turbidity.toFixed(2) : 'N/A';
+
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeSocket(); // Initialize socket di web page
+    });
+</script>
+
+
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
     const phMax = document.getElementById('phMax');
     const phMin = document.getElementById('phMin');
@@ -253,13 +293,13 @@ class ="active"
             if (data.status === 'success') {
                 document.getElementById('aiRecContent').innerHTML = data.recommendation;
             } else {
-                document.getElementById('aiRecContent').innerHTML = 
+                document.getElementById('aiRecContent').innerHTML =
                     `<div class="alert alert-danger">Gagal: ${data.message}</div>`;
             }
         })
         .catch(error => {
             document.getElementById('aiRecLoading').classList.add('d-none');
-            document.getElementById('aiRecContent').innerHTML = 
+            document.getElementById('aiRecContent').innerHTML =
                 `<div class="alert alert-danger">Error: ${error}</div>`;
         });
     }
@@ -278,8 +318,7 @@ class ="active"
         if (data.status === 'success') {
             console.log(data.data);
             updateStatistiktabel(data.data);
-            // updateDashboardWithFilteredData(data.data);
-            // updateCharts(data.data);
+            updateCharts(data.data);
         } else {
             // alert('Tidak ada data ditemukan');
         }
@@ -352,150 +391,147 @@ function hitungStatistik(data){
         turbidity: getStats(turbidityValues)
     };
 }
-</script>
 
-
-<!-- cdn web socket -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-<script>
-    let socket;
-
-    // inisiasi socket
-    function initializeSocket(){
-        socket = io('/dashboard');
-        socket.on('connect', function(){
-            console.log('dashboard konek socket cuy');
-        })
-        socket.on('disconnect', function(){
-            console.log('walawe dashboard ga konek socket ');
-        })
-        socket.on('sensor_update', function(res){
-            if (res.type === 'realtime' && res.data) {
-                updateRealtimeData(res.data);
-            }
-        })
-
-    }
-
-    // update realtime data
-    function updateRealtimeData(data) {
-        document.getElementById('ph_value').textContent = data.ph ? data.ph.toFixed(2) : 'N/A';
-        document.getElementById('suhu_value').textContent = data.suhu ? data.suhu.toFixed(1) : 'N/A';
-        document.getElementById('tds_value').textContent = data.tds ? data.tds.toFixed(0) : 'N/A';
-        document.getElementById('turbidity_value').textContent = data.turbidity ? data.turbidity.toFixed(2) : 'N/A';
-
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeSocket(); // Initialize socket di web page
-    });
-</script>
-
-
-<!-- Chart.js Library -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-
-
-        // dumny data charts sementara
-    const sampleData = {
-    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-    datasets: [
-        {
-        data: [7, 6.8, 7.2, 6.9, 7.1, 6.7, 7.3, 6.8, 7.0, 6.9],
-        backgroundColor: "rgba(46, 196, 182, 0.6)",
-        borderColor: "rgba(46, 196, 182, 1)",
-        borderWidth: 2,
-        fill: true,
-        },
-    ],
-    };
-
-    const chartConfig = {
+// chart dashboard sections
+let phChart, suhuChart, tdsChart, turbidityChart;
+const chartConfig = {
     type: "line",
     options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-        legend: {
-            display: false,
+            legend: { display: false },
+            tooltip: {
+                enabled: true,
+                mode: 'index',
+                intersect: false,
+            }
         },
-        },
+
         scales: {
-        y: {
-            beginAtZero: false,
-        },
+        x: {
+            display: false,
+            title: { display: true, text: "Tanggal/Waktu" }
         },
     },
-    };
+    },
+};
 
-    // Create PH Chart
-    const phCtx = document.getElementById("phChart").getContext("2d");
-    new Chart(phCtx, {
-    ...chartConfig,
-    data: {
-        ...sampleData,
-        datasets: [
-        {
-            ...sampleData.datasets[0],
-            backgroundColor: "rgba(46, 196, 182, 0.6)",
-            borderColor: "rgba(46, 196, 182, 1)",
-        },
-        ],
-    },
+// inisiasi chart
+document.addEventListener('DOMContentLoaded', function() {
+    const phCtx = document.getElementById('phChart').getContext('2d');
+    const suhuCtx = document.getElementById('suhuChart').getContext('2d');
+    const tdsCtx = document.getElementById('tdsChart').getContext('2d');
+    const turbidityCtx = document.getElementById('turbidityChart').getContext('2d');
+
+    phChart = new Chart(phCtx, {
+        ...chartConfig,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'PH',
+                data: [],
+                borderColor: '#2EC4B6',
+                backgroundColor: 'rgba(46,196,182,0.1)',
+                tension: 0.3,
+                fill: true,
+                pointRadius: 2,
+            }]
+        }
     });
 
-    // Create Suhu Chart
-    const suhuCtx = document.getElementById("suhuChart").getContext("2d");
-    new Chart(suhuCtx, {
-    ...chartConfig,
-    data: {
-        ...sampleData,
-        datasets: [
-        {
-            ...sampleData.datasets[0],
-            data: [25, 26, 24, 27, 25, 26, 24, 25, 26, 25],
-            backgroundColor: "rgba(255, 166, 48, 0.6)",
-            borderColor: "rgba(255, 166, 48, 1)",
-        },
-        ],
-    },
+    suhuChart = new Chart(suhuCtx, {
+        ...chartConfig,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Suhu',
+                data: [],
+                borderColor: '#FFA630',
+                backgroundColor: 'rgba(255,166,48,0.1)',
+                tension: 0.3,
+                fill: true,
+                pointRadius: 2,
+            }]
+        }
     });
 
-    // Create TDS Chart
-    const tdsCtx = document.getElementById("tdsChart").getContext("2d");
-    new Chart(tdsCtx, {
-    ...chartConfig,
-    data: {
-        ...sampleData,
-        datasets: [
-        {
-            ...sampleData.datasets[0],
-            data: [150, 145, 160, 155, 150, 140, 165, 150, 145, 155],
-            backgroundColor: "rgba(46, 196, 182, 0.6)",
-            borderColor: "rgba(46, 196, 182, 1)",
-        },
-        ],
-    },
+    tdsChart = new Chart(tdsCtx, {
+        ...chartConfig,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'TDS',
+                data: [],
+                borderColor: '#1A535C',
+                backgroundColor: 'rgba(26,83,92,0.1)',
+                tension: 0.3,
+                fill: true,
+                pointRadius: 2,
+            }]
+        }
     });
 
-    // Create Turbidity Chart
-    const turbidityCtx = document.getElementById("turbidityChart").getContext("2d");
-    new Chart(turbidityCtx, {
-    ...chartConfig,
-    data: {
-        ...sampleData,
-        datasets: [
-        {
-            ...sampleData.datasets[0],
-            data: [2, 1.8, 2.2, 1.9, 2.1, 1.7, 2.3, 1.8, 2.0, 1.9],
-            backgroundColor: "rgba(255, 166, 48, 0.6)",
-            borderColor: "rgba(255, 166, 48, 1)",
-        },
-        ],
-    },
+    turbidityChart = new Chart(turbidityCtx, {
+        ...chartConfig,
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Turbidity',
+                data: [],
+                borderColor: '#FF6B6B',
+                backgroundColor: 'rgba(255,107,107,0.1)',
+                tension: 0.3,
+                fill: true,
+                pointRadius: 2,
+            }]
+        }
     });
+});
 
+function updateCharts(data){
+    if (!data || data.length === 0) return;
+
+        const labels = data.map(item => {
+            if (item.timestamp) {
+                const date = new Date(item.timestamp);
+                return date.toLocaleString('id-ID', {
+                    day: '2-digit', month: '2-digit', year: '2-digit',
+                    hour: '2-digit', minute: '2-digit'
+                });
+            } else if (item.tanggal) {
+                return item.tanggal;
+            } else {
+                return '';
+            }
+        });
+
+        // Ambil data sensor
+        const phData = data.map(item => item.ph);
+        const suhuData = data.map(item => item.suhu);
+        const tdsData = data.map(item => item.tds);
+        const turbidityData = data.map(item => item.turbidity);
+
+        phChart.data.labels = labels;
+        phChart.data.datasets[0].data = phData;
+        phChart.update();
+
+        suhuChart.data.labels = labels;
+        suhuChart.data.datasets[0].data = suhuData;
+        suhuChart.update();
+
+        tdsChart.data.labels = labels;
+        tdsChart.data.datasets[0].data = tdsData;
+        tdsChart.update();
+
+        // Update Turbidity Chart
+        turbidityChart.data.labels = labels;
+        turbidityChart.data.datasets[0].data = turbidityData;
+        turbidityChart.update();
+}
 </script>
+
+
+
 
 {% endblock %}
