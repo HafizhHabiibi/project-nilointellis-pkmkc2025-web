@@ -13,7 +13,50 @@ class ="active"
 {% endblock %}
 
 {% block content %}
+
 <h4 class="title title2">Dashboard</h4>
+
+<div class="sensor-container">
+    <div class="boxes">
+    <!-- PH -->
+    <div class="box">
+        <span class="text-box">PH Air</span>
+        <div class="value-row">
+            <span id="ph_value">17.99</span>
+            <img class="imgLogo" src="../static/assets/Vector ph.svg" alt="PH air">
+        </div>
+    </div>
+
+    <!-- Suhu -->
+    <div class="box">
+        <span class="text-box">Suhu Air</span>
+        <div class="value-row">
+            <span id="suhu_value">-127.0</span>
+            <img class="imgLogo" src="../static/assets/vector suhu.svg" alt="Suhu air">
+        </div>
+    </div>
+
+    <!-- TDS -->
+    <div class="box">
+        <span class="text-box">TDS</span>
+        <div class="value-row">
+            <span id="tds_value">N/A</span>
+            <img class="imgLogo" src="../static/assets/Vector TDS.svg" alt="TDS">
+        </div>
+    </div>
+
+    <!-- Turbidity -->
+    <div class="box">
+        <span class="text-box">Turbidity</span>
+        <div class="value-row">
+            <span id="turbidity_value">1941.14</span>
+            <img class="imgLogo" src="../static/assets/Vector turbidity.svg" alt="Turbidity">
+        </div>
+    </div>
+</div>
+
+
+<!-- <h4 class="title title2">Dashboard</h4>
 <div class="container">
     <div class="boxes">
         <div class="box box_1">
@@ -44,7 +87,7 @@ class ="active"
                 <img class="imgLogo" src="../static/assets/Vector turbidity.svg" alt="">
             </span>
         </div>
-    </div>
+    </div> -->
 
     <!-- Button Dapatkan Saran -->
     <div class="col-md-4">
