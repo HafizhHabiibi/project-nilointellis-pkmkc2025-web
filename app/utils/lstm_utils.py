@@ -61,8 +61,7 @@ def fetch_last_data():
 
         if len(data_list) < TIMESTEPS // 2:  # batas minimal 50%
             raise ValueError(
-                f"Data hanya {len(data_list)} titik dalam 20 menit terakhir, "
-                f"kurang dari batas minimal {TIMESTEPS // 2} untuk interpolasi."
+                f"Data hanya {len(data_list)} titik dalam 20 menit terakhir"
             )
 
         # Urutkan + resample ke 1 menit

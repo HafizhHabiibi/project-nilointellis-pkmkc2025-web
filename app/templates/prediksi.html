@@ -4,64 +4,6 @@
 <link rel="stylesheet" href="../static/css/dashboard.css">
 <link rel="stylesheet" href="../static/css/prediksi.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-/* Loading Spinner */
-.loading-spinner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255, 255, 255, 0.7);
-    z-index: 1000;
-    text-align: center;
-}
-.spinner {
-    border: 6px solid #f3f3f3;
-    border-top: 6px solid #2EC4B6;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-    margin-bottom: 10px;
-}
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Chart Layout */
-.charts-section {
-    margin-top: 2rem;
-}
-.chart-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-}
-.chart-container {
-    flex: 1 1 45%;
-    min-width: 280px;
-    background: #fff;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.chart-container h5 {
-    margin-bottom: 0.5rem;
-    text-align: center;
-}
-.alert {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    text-align: center;
-}
-.alert.success { background: #d4edda; color: #155724; }
-.alert.error { background: #f8d7da; color: #721c24; }
-</style>
 {% endblock %}
 
 {% block sidebar_prediksi %}
@@ -69,8 +11,8 @@ class="active"
 {% endblock %}
 
 {% block content %}
+<h4 class="title title2">Prediksi</h4>
 <div class="container">
-    <button id="btnPrediksi" class="btn-ai">🔮 Jalankan Prediksi</button>
 
     <!-- Loading animation -->
     <div id="loadingBox" class="loading-spinner" style="display:none;">
@@ -78,86 +20,121 @@ class="active"
         <p>Menjalankan prediksi...</p>
     </div>
 
-    <!-- Success & error messages -->
-    <div id="successBox" class="alert success" style="display:none;">✅ Prediksi berhasil!</div>
-    <div id="errorBox" class="alert error" style="display:none;"></div>
-
+    
     <!-- Chart Section -->
     <div class="charts-section">
         <div class="chart-row">
-            <div class="chart-container"><h5>pH</h5><canvas id="chartPh"></canvas></div>
-            <div class="chart-container"><h5>Suhu</h5><canvas id="chartSuhu"></canvas></div>
+            <div class="chart-container">
+                <h5>pH</h5><canvas id="chartPh"></canvas>
+            </div>
+            <div class="chart-container">
+                <h5>Suhu</h5><canvas id="chartSuhu"></canvas>
+            </div>
         </div>
         <div class="chart-row">
-            <div class="chart-container"><h5>Turbidity</h5><canvas id="chartTurbidity"></canvas></div>
-            <div class="chart-container"><h5>TDS</h5><canvas id="chartTds"></canvas></div>
+            <div class="chart-container">
+                <h5>Turbidity</h5><canvas id="chartTurbidity"></canvas>
+            </div>
+            <div class="chart-container">
+                <h5>TDS</h5><canvas id="chartTds"></canvas>
+            </div>
         </div>
     </div>
-</div>
+    
+    <!-- Success & error messages -->
+    <div id="successBox" class="alert success" style="display:none;">✅ Prediksi berhasil!</div>
+    <div id="errorBox" class="alert error" style="display:none;"></div>
+    
+    <!-- section prediksi menggunakan ai -->
+    <div class="prediksi-container">
+        <span class="title3">Prediksi Beberapa Jam Kedepan?</span>
+        <div class="input-prediksi">
+            <!-- form input prediksi -->
+            <input type="number" id="jumlahJam" min="1" max="24" value="1" readonly>
+            <!-- control input -->
+            <button class="minus-button">-</button>
+            <button class="plus-button">+</button>
 
-<script>
-let charts = {}; // simpan semua chart instance
+        </div>
+        <div class="submit-continer">
+            <!-- submit button -->
+            <button type="submit" id="btnPrediksi" class="btn btn-light fw-bold w-200 mt-4 boxSaran submitPrediksi">
+                <svg class="bintang_saran" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g fill="none">
+                        <path
+                            d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z" />
+                        <path fill="#2EC4B6"
+                            d="M9.107 5.448c.598-1.75 3.016-1.803 3.725-.159l.06.16l.807 2.36a4 4 0 0 0 2.276 2.411l.217.081l2.36.806c1.75.598 1.803 3.016.16 3.725l-.16.06l-2.36.807a4 4 0 0 0-2.412 2.276l-.081.216l-.806 2.361c-.598 1.75-3.016 1.803-3.724.16l-.062-.16l-.806-2.36a4 4 0 0 0-2.276-2.412l-.216-.081l-2.36-.806c-1.751-.598-1.804-3.016-.16-3.724l.16-.062l2.36-.806A4 4 0 0 0 8.22 8.025l.081-.216zM19 2a1 1 0 0 1 .898.56l.048.117l.35 1.026l1.027.35a1 1 0 0 1 .118 1.845l-.118.048l-1.026.35l-.35 1.027a1 1 0 0 1-1.845.117l-.048-.117l-.35-1.026l-1.027-.35a1 1 0 0 1-.118-1.845l.118-.048l1.026-.35l.35-1.027A1 1 0 0 1 19 2" />
+                    </g>
+                </svg>
+                Prediksi Dengan AI
+            </button>
+        </div>
+        
 
-document.getElementById("btnPrediksi").addEventListener("click", async () => {
-    // Reset tampilan
-    document.getElementById("successBox").style.display = "none";
-    document.getElementById("errorBox").style.display = "none";
-    document.getElementById("loadingBox").style.display = "flex";
+        <script>
+            let charts = {}; // simpan semua chart instance
 
-    try {
-        let res = await fetch("/run_prediksi", { method: "POST" });
-        let json = await res.json();
+            document.getElementById("btnPrediksi").addEventListener("click", async () => {
+                // Reset tampilan
+                document.getElementById("successBox").style.display = "none";
+                document.getElementById("errorBox").style.display = "none";
+                document.getElementById("loadingBox").style.display = "flex";
 
-        document.getElementById("loadingBox").style.display = "none";
+                try {
+                    let res = await fetch("/run_prediksi", { method: "POST" });
+                    let json = await res.json();
 
-        if (json.status === "error") {
-            document.getElementById("errorBox").innerText = "❌ " + json.message;
-            document.getElementById("errorBox").style.display = "block";
-            return;
-        }
+                    document.getElementById("loadingBox").style.display = "none";
 
-        const labels = json.data.timestamps;
-        renderChart("chartPh", labels, json.data.ph, "pH");
-        renderChart("chartSuhu", labels, json.data.suhu, "Suhu");
-        renderChart("chartTurbidity", labels, json.data.turbidity, "Turbidity");
-        renderChart("chartTds", labels, json.data.tds, "TDS");
+                    if (json.status === "error") {
+                        document.getElementById("errorBox").innerText = "❌ " + json.message;
+                        document.getElementById("errorBox").style.display = "block";
+                        return;
+                    }
 
-        document.getElementById("successBox").style.display = "block";
-    } catch (err) {
-        document.getElementById("loadingBox").style.display = "none";
-        document.getElementById("errorBox").innerText = "❌ Gagal melakukan prediksi: " + err;
-        document.getElementById("errorBox").style.display = "block";
-    }
-});
+                    const labels = json.data.timestamps;
+                    renderChart("chartPh", labels, json.data.ph, "pH");
+                    renderChart("chartSuhu", labels, json.data.suhu, "Suhu");
+                    renderChart("chartTurbidity", labels, json.data.turbidity, "Turbidity");
+                    renderChart("chartTds", labels, json.data.tds, "TDS");
 
-function renderChart(canvasId, labels, data, label) {
-    // Hapus chart lama dulu kalau ada
-    if (charts[canvasId]) {
-        charts[canvasId].destroy();
-    }
-    const ctx = document.getElementById(canvasId).getContext("2d");
-    charts[canvasId] = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: label,
-                data: data,
-                borderColor: "#2EC4B6",
-                backgroundColor: "rgba(46, 196, 182, 0.2)",
-                fill: true,
-                tension: 0.3
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                x: { ticks: { autoSkip: true, maxTicksLimit: 10 } },
-                y: { beginAtZero: false }
+                    document.getElementById("successBox").style.display = "block";
+                } catch (err) {
+                    document.getElementById("loadingBox").style.display = "none";
+                    document.getElementById("errorBox").innerText = "❌ Gagal melakukan prediksi: " + err;
+                    document.getElementById("errorBox").style.display = "block";
+                }
+            });
+
+            function renderChart(canvasId, labels, data, label) {
+                // Hapus chart lama dulu kalau ada
+                if (charts[canvasId]) {
+                    charts[canvasId].destroy();
+                }
+                const ctx = document.getElementById(canvasId).getContext("2d");
+                charts[canvasId] = new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: label,
+                            data: data,
+                            borderColor: "#2EC4B6",
+                            backgroundColor: "rgba(46, 196, 182, 0.2)",
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { ticks: { autoSkip: true, maxTicksLimit: 10 } },
+                            y: { beginAtZero: false }
+                        }
+                    }
+                });
             }
-        }
-    });
-}
-</script>
-{% endblock %}
+        </script>
+        {% endblock %}

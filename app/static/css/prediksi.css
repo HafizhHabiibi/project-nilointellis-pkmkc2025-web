@@ -42,57 +42,57 @@ body {
   z-index: 999;
 }
 
+/* Loading Spinner */
 .loading-spinner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+    text-align: center;
 }
 
 .spinner {
-  width: 60px;
-  height: 60px;
-  border: 6px solid rgba(0,0,0,0.1);
-  border-top: 6px solid #2EC4B6;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 12px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #2EC4B6;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(360deg);}
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-.loading-spinner p {
-  font-size: 15px;
-  color: #444;
-  font-weight: 500;
-}
-
-/* === Alert Box === */
 .alert {
-  padding: 14px 20px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  margin: 15px auto;
-  width: 90%;
-  max-width: 500px;
-  animation: fadeIn 0.5s ease-in-out;
-  text-align: center;
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    text-align: center;
 }
 
 .alert.success {
-  background: rgba(46, 196, 182, 0.1);
-  color: #2EC4B6;
-  border: 1px solid #2EC4B6;
+    background: #d4edda;
+    color: #155724;
 }
 
 .alert.error {
-  background: rgba(255, 99, 99, 0.1);
-  color: #FF4D4D;
-  border: 1px solid #FF4D4D;
+    background: #f8d7da;
+    color: #721c24;
 }
 
 @keyframes fadeIn {
@@ -133,6 +133,71 @@ body {
   color: #333;
 }
 
+.prediksi-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem; /* 12px = 0.75rem */
+  margin-top: 1.875rem; /* 30px = 1.875rem */
+  /* padding: 1rem 15rem; */
+}
+
+.title3{
+  font-size: 24px;
+}
+
+
+.input-prediksi {
+  display: flex;
+  align-items: left;
+  gap: 0.5rem; /* 8px = 0.5rem */
+  box-shadow: 0 0.3rem 0.5rem 0 rgba(0, 0, 0, 0.3);
+  width: 50%;
+  border-radius: 0.5rem; /* 8px = 0.5rem */
+}
+
+
+.input-prediksi input {
+  width: 80%;
+  font-size: 2rem;
+  text-align: right;
+  border: none;
+  border-radius: 0.5rem; /* 8px = 0.5rem */
+  outline: none;
+  color: var(--hitam);
+  margin: auto;
+}
+
+.plus-button,
+.minus-button {
+  background-color: var(--primary);
+  color: var(--salmon);
+  border: none;
+  font-weight: 200;
+  border-radius: 0.5rem; /* 8px = 0.5rem */
+  padding: 0 0.875rem; /* 0px 14px = 0 0.875rem */
+  cursor: pointer;
+  font-size: 3rem;
+}
+
+.plus-button:hover,
+.minus-button:hover {
+  /* background-color: var(--hitam); */
+  color: var(--salmon-terang);
+}
+
+.submitPrediksi {
+  width: 100%;
+  padding: 1rem 10rem;
+}
+
+.bintang_saran {
+  width: 45px;
+  height: 29px;
+  margin-right: 8px; /* kasih jarak sama tulisan */
+  vertical-align: middle;
+}
+
 /* === Responsiveness === */
 @media (max-width: 768px) {
   .btn-ai {
@@ -142,5 +207,51 @@ body {
   
   .chart-container h5 {
     font-size: 14px;
+  }
+
+  .input-prediksi{
+    width: 50%;
+  }
+
+  /* .submitPrediksi {
+    display: flex;
+    align-items: center;      
+    justify-content: center;  
+    gap: 8px;                 
+    width: 100%;              
+    text-align: center;       
+  }
+
+  .submitPrediksi svg {
+    width: 20px;   
+    height: 20px;
+  } */
+
+  /* .bintang_saran {
+    width: 12px;
+    height: 18px;
+  } */
+
+  .boxSaran {
+  width: 100%;               /* samain sama tombol di atas */
+  margin: 10px auto;        /* biar ketengah */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1px;
+  padding: 10px;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+.boxSaran svg {
+  width: 20px;
+  height: 20px;
+}
+
+  .title3{
+    font-size: 15px;
   }
 }
