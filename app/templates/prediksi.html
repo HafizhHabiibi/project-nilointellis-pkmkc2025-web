@@ -20,23 +20,26 @@ class="active"
         <p>Menjalankan prediksi...</p>
     </div>
 
-    
     <!-- Chart Section -->
     <div class="charts-section">
         <div class="chart-row">
             <div class="chart-container">
-                <h5>pH</h5><canvas id="chartPh"></canvas>
+                <h5>pH Air</h5>
+                <canvas id="chartPh"></canvas>
             </div>
             <div class="chart-container">
-                <h5>Suhu</h5><canvas id="chartSuhu"></canvas>
+                <h5>Suhu</h5>
+                <canvas id="chartSuhu"></canvas>
             </div>
         </div>
         <div class="chart-row">
             <div class="chart-container">
-                <h5>Turbidity</h5><canvas id="chartTurbidity"></canvas>
+                <h5>Turbidity</h5>
+                <canvas id="chartTurbidity"></canvas>
             </div>
             <div class="chart-container">
-                <h5>TDS</h5><canvas id="chartTds"></canvas>
+                <h5>TDS</h5>
+                <canvas id="chartTds"></canvas>
             </div>
         </div>
     </div>
@@ -45,17 +48,17 @@ class="active"
     <div id="successBox" class="alert success" style="display:none;">✅ Prediksi berhasil!</div>
     <div id="errorBox" class="alert error" style="display:none;"></div>
     
-    <!-- section prediksi menggunakan ai -->
+    <!-- Section prediksi menggunakan AI -->
     <div class="prediksi-container">
-        <span class="title3">Prediksi Beberapa Jam Kedepan?</span>
-        <div class="input-prediksi">
+        <!-- <span class="title3">Prediksi Beberapa Jam Kedepan?</span>
+        <div class="input-prediksi"> -->
             <!-- form input prediksi -->
-            <input type="number" id="jumlahJam" min="1" max="24" value="1" readonly>
+            <!-- <input type="number" id="jumlahJam" min="1" max="24" value="2" readonly> -->
             <!-- control input -->
-            <button class="minus-button">-</button>
+            <!-- <button class="minus-button">-</button>
             <button class="plus-button">+</button>
+        </div> -->
 
-        </div>
         <div class="submit-continer">
             <!-- submit button -->
             <button type="submit" id="btnPrediksi" class="btn btn-light fw-bold w-200 mt-4 boxSaran submitPrediksi">
@@ -70,71 +73,74 @@ class="active"
                 Prediksi Dengan AI
             </button>
         </div>
-        
 
-        <script>
-            let charts = {}; // simpan semua chart instance
+        <span style="font-weight: 300;">AI bantu prediksi, tetap validasi langsung ya!</span>
+    </div>
+</div>
 
-            document.getElementById("btnPrediksi").addEventListener("click", async () => {
-                // Reset tampilan
-                document.getElementById("successBox").style.display = "none";
-                document.getElementById("errorBox").style.display = "none";
-                document.getElementById("loadingBox").style.display = "flex";
+<script>
+    let charts = {}; // simpan semua chart instance
 
-                try {
-                    let res = await fetch("/run_prediksi", { method: "POST" });
-                    let json = await res.json();
+    document.getElementById("btnPrediksi").addEventListener("click", async () => {
+        // Reset tampilan
+        document.getElementById("successBox").style.display = "none";
+        document.getElementById("errorBox").style.display = "none";
+        document.getElementById("loadingBox").style.display = "flex";
 
-                    document.getElementById("loadingBox").style.display = "none";
+        try {
+            let res = await fetch("/run_prediksi", { method: "POST" });
+            let json = await res.json();
 
-                    if (json.status === "error") {
-                        document.getElementById("errorBox").innerText = "❌ " + json.message;
-                        document.getElementById("errorBox").style.display = "block";
-                        return;
-                    }
+            document.getElementById("loadingBox").style.display = "none";
 
-                    const labels = json.data.timestamps;
-                    renderChart("chartPh", labels, json.data.ph, "pH");
-                    renderChart("chartSuhu", labels, json.data.suhu, "Suhu");
-                    renderChart("chartTurbidity", labels, json.data.turbidity, "Turbidity");
-                    renderChart("chartTds", labels, json.data.tds, "TDS");
-
-                    document.getElementById("successBox").style.display = "block";
-                } catch (err) {
-                    document.getElementById("loadingBox").style.display = "none";
-                    document.getElementById("errorBox").innerText = "❌ Gagal melakukan prediksi: " + err;
-                    document.getElementById("errorBox").style.display = "block";
-                }
-            });
-
-            function renderChart(canvasId, labels, data, label) {
-                // Hapus chart lama dulu kalau ada
-                if (charts[canvasId]) {
-                    charts[canvasId].destroy();
-                }
-                const ctx = document.getElementById(canvasId).getContext("2d");
-                charts[canvasId] = new Chart(ctx, {
-                    type: "line",
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: label,
-                            data: data,
-                            borderColor: "#2EC4B6",
-                            backgroundColor: "rgba(46, 196, 182, 0.2)",
-                            fill: true,
-                            tension: 0.3
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: { ticks: { autoSkip: true, maxTicksLimit: 10 } },
-                            y: { beginAtZero: false }
-                        }
-                    }
-                });
+            if (json.status === "error") {
+                document.getElementById("errorBox").innerText = "❌ " + json.message;
+                document.getElementById("errorBox").style.display = "block";
+                return;
             }
-        </script>
-        {% endblock %}
+
+            const labels = json.data.timestamps;
+            renderChart("chartPh", labels, json.data.ph, "pH");
+            renderChart("chartSuhu", labels, json.data.suhu, "Suhu");
+            renderChart("chartTurbidity", labels, json.data.turbidity, "Turbidity");
+            renderChart("chartTds", labels, json.data.tds, "TDS");
+
+            document.getElementById("successBox").style.display = "block";
+        } catch (err) {
+            document.getElementById("loadingBox").style.display = "none";
+            document.getElementById("errorBox").innerText = "❌ Gagal melakukan prediksi: " + err;
+            document.getElementById("errorBox").style.display = "block";
+        }
+    });
+
+    function renderChart(canvasId, labels, data, label) {
+        // Hapus chart lama dulu kalau ada
+        if (charts[canvasId]) {
+            charts[canvasId].destroy();
+        }
+        const ctx = document.getElementById(canvasId).getContext("2d");
+        charts[canvasId] = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    borderColor: "#2EC4B6",
+                    backgroundColor: "rgba(46, 196, 182, 0.2)",
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { ticks: { autoSkip: true, maxTicksLimit: 10 } },
+                    y: { beginAtZero: false }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

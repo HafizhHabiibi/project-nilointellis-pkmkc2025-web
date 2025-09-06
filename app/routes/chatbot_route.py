@@ -3,7 +3,7 @@ from config import Config
 from app.controller.user_controller import UserController
 from app.utils.auth_utils import web_session_required
 from app.utils.prompt_utils import role_chatbot
-from app.utils.ai_utils import get_ai_reply
+from app.utils.ai_utils import get_ai_response
 from datetime import datetime
 
 
@@ -14,7 +14,6 @@ chatbot_bp = Blueprint('chatbot', __name__)
 @web_session_required
 def chatbot():
     if "messages" not in session:
-        session['chat'] = [role_chatbot()]
         session["messages"] = []
 
     if request.method == "POST":
@@ -22,7 +21,6 @@ def chatbot():
         user_input = data.get("message", "").strip()
         
         if user_input:
-            session['chat'].append({"role": "user", "content": user_input})
             session["messages"].append({
                 "role": "user",
                 "content": user_input,
@@ -31,13 +29,14 @@ def chatbot():
 
             try: 
                 # Get AI response
-                ai_reply = get_ai_reply(
+                ai_reply = get_ai_response(
                     api_key=Config.CHATBOT_API_KEY,
-                    model_name="GLM-4-Flash",
-                    prompt=session['chat']
+                    model_name="gemini-2.5-flash",
+                    prompt=session['messages'],
+                    temperature=0.5,
+                    system_instruction=role_chatbot()
                 )
                 
-                session["chat"].append({"role": "assistant", "content": ai_reply})
                 session["messages"].append({
                     "role": "assistant",
                     "content": ai_reply,
@@ -52,10 +51,10 @@ def chatbot():
                 })
                 
             except Exception as e:
-                print(f"Error getting AI recommendation: {e}")
+                print(f"Chatbot Error: {e}")
                 return jsonify({
                     "status": "error",
-                    "message": "Maaf, terjadi kesalahan. Silakan coba lagi."
+                    "message": f"{str(e)}"
                 }), 500
         
         return jsonify({"status": "error", "message": "Pesan tidak boleh kosong."}), 400
