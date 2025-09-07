@@ -13,6 +13,54 @@ def ai_recommendation_prompt(data):
     Jika bukti lemah/konflik, sebutkan. Jangan membuat referensi fiktif.
     """
     
+def ai_analysis_prompt(stats, filter_info, data_count):
+    """Fungsi untuk membangun prompt analisis AI berdasarkan statistik data"""
+    tanggal_awal = filter_info.get('tanggal_awal', 'Tidak ditentukan')
+    tanggal_akhir = filter_info.get('tanggal_akhir', 'Tidak ditentukan')
+    granulitas = filter_info.get('granulitas', 'Tidak ditentukan')
+    
+    prompt = f"""
+    Anda adalah pakar budidaya ikan nila berpengalaman dengan spesialisasi dalam pengelolaan 
+    kualitas air dan optimalisasi produksi. Analisis data sensor berikut secara mendalam:
+
+    INFORMASI FILTER:
+    - Periode: {tanggal_awal} s/d {tanggal_akhir}
+    - Granulitas: {granulitas}
+    - Total Data Points: {data_count}
+
+    STATISTIK DATA:
+    pH Air:
+    - Minimum: {stats.get('ph', {}).get('min', 0)}
+    - Maksimum: {stats.get('ph', {}).get('max', 0)}  
+    - Rata-rata: {stats.get('ph', {}).get('avg', 0)}
+
+    Suhu Air:
+    - Minimum: {stats.get('suhu', {}).get('min', 0)}°C
+    - Maksimum: {stats.get('suhu', {}).get('max', 0)}°C
+    - Rata-rata: {stats.get('suhu', {}).get('avg', 0)}°C
+
+    TDS (Total Dissolved Solids):
+    - Minimum: {stats.get('tds', {}).get('min', 0)} ppm
+    - Maksimum: {stats.get('tds', {}).get('max', 0)} ppm
+    - Rata-rata: {stats.get('tds', {}).get('avg', 0)} ppm
+
+    Turbidity (Kekeruhan):
+    - Minimum: {stats.get('turbidity', {}).get('min', 0)} NTU
+    - Maksimum: {stats.get('turbidity', {}).get('max', 0)} NTU
+    - Rata-rata: {stats.get('turbidity', {}).get('avg', 0)} NTU
+
+    Berdasarkan data di atas, berikan analisis komprehensif yang mencakup:
+
+    1. STATUS KUALITAS AIR: Evaluasi kondisi air berdasarkan standar WHO/Kemenkes
+    2. TREN DAN POLA: Analisis pola data selama periode yang dipilih
+    3. POTENSI MASALAH: Identifikasi nilai yang bermasalah atau tidak normal
+    4. KORELASI PARAMETER: Hubungan antar parameter sensor
+    5. REKOMENDASI TINDAKAN: Saran spesifik untuk perbaikan kualitas air
+
+    Format jawaban dengan struktur yang jelas dan mudah dipahami. Gunakan bahasa Indonesia yang baik dan benar. Maksimal 150 kata.
+    """
+    return prompt
+    
 def role_chatbot():
     """Fungsi untuk mendapatkan role chatbot yang digunakan dalam sesi chat"""
     return """

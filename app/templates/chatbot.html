@@ -162,6 +162,7 @@ async function handleSubmit(e) {
             addMessage("⚠️ Terjadi kesalahan: " + (data.message || "Tidak diketahui"));
         }
     } catch (err) {
+        console.error("Error:", err);
         hideTyping();
         addMessage("⚠️ Gagal komunikasi dengan server");
     } finally {

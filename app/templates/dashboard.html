@@ -107,7 +107,7 @@ class ="active"
                 </div>
                 <div class="modal-body">
                     <div id="aiRecLoading" class="text-center d-none">
-                        <div class="spinner-border text-primary" role="status">
+                        <div class="spinner-border text-warning" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
                         <p class="mt-2">Mohon Tunggu Sebentar, AI sedang berpikir...</p>
@@ -210,12 +210,68 @@ class ="active"
 
         <!-- Analisis AI Button -->
         <div class="ai-analysis">
-            <button class="btn btn-ai"><svg class="svg-bintang" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><g fill="none"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="#FFA630" d="M9.107 5.448c.598-1.75 3.016-1.803 3.725-.159l.06.16l.807 2.36a4 4 0 0 0 2.276 2.411l.217.081l2.36.806c1.75.598 1.803 3.016.16 3.725l-.16.06l-2.36.807a4 4 0 0 0-2.412 2.276l-.081.216l-.806 2.361c-.598 1.75-3.016 1.803-3.724.16l-.062-.16l-.806-2.36a4 4 0 0 0-2.276-2.412l-.216-.081l-2.36-.806c-1.751-.598-1.804-3.016-.16-3.724l.16-.062l2.36-.806A4 4 0 0 0 8.22 8.025l.081-.216zM19 2a1 1 0 0 1 .898.56l.048.117l.35 1.026l1.027.35a1 1 0 0 1 .118 1.845l-.118.048l-1.026.35l-.35 1.027a1 1 0 0 1-1.845.117l-.048-.117l-.35-1.026l-1.027-.35a1 1 0 0 1-.118-1.845l.118-.048l1.026-.35l.35-1.027A1 1 0 0 1 19 2"/></g></svg>
-                Analisis AI</button>
+            <button class="btn btn-ai" onclick="getAIAnalysis()">
+                <svg class="svg-bintang" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" style="width: 1.5em; height: 1.5em; max-width: 100%; max-height: 100%; vertical-align: middle;"><g fill="none"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="#FFA630" d="M9.107 5.448c.598-1.75 3.016-1.803 3.725-.159l.06.16l.807 2.36a4 4 0 0 0 2.276 2.411l.217.081l2.36.806c1.75.598 1.803 3.016.16 3.725l-.16.06l-2.36.807a4 4 0 0 0-2.412 2.276l-.081.216l-.806 2.361c-.598 1.75-3.016 1.803-3.724.16l-.062-.16l-.806-2.36a4 4 0 0 0-2.276-2.412l-.216-.081l-2.36-.806c-1.751-.598-1.804-3.016-.16-3.724l.16-.062l2.36-.806A4 4 0 0 0 8.22 8.025l.081-.216zM19 2a1 1 0 0 1 .898.56l.048.117l.35 1.026l1.027.35a1 1 0 0 1 .118 1.845l-.118.048l-1.026.35l-.35 1.027a1 1 0 0 1-1.845.117l-.048-.117l-.35-1.026l-1.027-.35a1 1 0 0 1-.118-1.845l.118-.048l1.026-.35l.35-1.027A1 1 0 0 1 19 2"/></g></svg>
+                Analisis AI
+            </button>
+        </div>
+
+        <!-- Modal AI Analyst -->
+        <div class="modal fade" id="aiAnalysisModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="font-weight:700">Analisis Grafik</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="aiAnalysisLoading" class="text-center d-none">
+                            <div class="spinner-border text-warning" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">AI sedang menganalisis data Anda...</p>
+                        </div>
+                        <div id="aiAnalysisContent"
+                            style="max-height:500px; overflow-y:auto; overflow-x:hidden; word-wrap:break-word; text-align:left; display:flex; flex-direction: column; gap: 0.2rem; font-size: 1.1rem; line-height: 1.4;">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Error -->
+        <div class="modal fade" id="errorModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger" style="font-weight:700">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Perhatian
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-warning" role="alert">
+                            <strong>Walah!</strong>
+                            <p id="errorMessage" class="mb-0 mt-2"></p>
+                        </div>
+                        <div class="mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-lightbulb me-1"></i>
+                                Tip: Gunakan filter tanggal untuk memilih periode data yang ingin dianalisis.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Mengerti</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock %}
 
 {% block scripts %}
@@ -276,6 +332,8 @@ class ="active"
     const turbidityMax = document.getElementById('turbidityMax');
     const turbidityMin = document.getElementById('turbidityMin');
     const turbidityAvg = document.getElementById('turbidityAvg');
+    let currentStatisticsData = null;
+    let currentFilterInfo = null;
 
 
     flatpickr("#tanggalAwal", {
@@ -347,233 +405,290 @@ class ="active"
     }
 
     function submitForm() {
-    // document.getElementById('filterForm').submit();
+        // document.getElementById('filterForm').submit();
 
-    const form = document.getElementById('filterForm');
-    const formData = new FormData(form);
-    fetch ('/dashboard/filter', {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            console.log(data.data);
-            updateStatistiktabel(data.data);
-            updateCharts(data.data);
-        } else {
-            // alert('Tidak ada data ditemukan');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan');
-    });
-}
+        const form = document.getElementById('filterForm');
+        const formData = new FormData(form);
 
-function updateStatistiktabel(data){
-    const stats = hitungStatistik(data);
-
-    // Update PH statistics
-    document.getElementById('phMax').textContent = stats.ph.max;
-    document.getElementById('phMin').textContent = stats.ph.min;
-    document.getElementById('phAvg').textContent = stats.ph.avg;
-
-    // Update Suhu statistics
-    document.getElementById('suhuMax').textContent = stats.suhu.max;
-    document.getElementById('suhuMin').textContent = stats.suhu.min;
-    document.getElementById('suhuAvg').textContent = stats.suhu.avg;
-
-    // Update TDS statistics
-    document.getElementById('tdsMax').textContent = stats.tds.max;
-    document.getElementById('tdsMin').textContent = stats.tds.min;
-    document.getElementById('tdsAvg').textContent = stats.tds.avg;
-
-    // Update Turbidity statistics
-    document.getElementById('turbidityMax').textContent = stats.turbidity.max;
-    document.getElementById('turbidityMin').textContent = stats.turbidity.min;
-    document.getElementById('turbidityAvg').textContent = stats.turbidity.avg;
-}
-
-function hitungStatistik(data){
-    if (!data || data.length === 0) {
-        return {
-            ph: { min: 0, max: 0, avg: 0 },
-            suhu: { min: 0, max: 0, avg: 0 },
-            tds: { min: 0, max: 0, avg: 0 },
-            turbidity: { min: 0, max: 0, avg: 0 }
+        // simpan info filter saat ini
+        currentFilterInfo = {
+            tanggal_awal: document.getElementById('tanggalAwal').value,
+            tanggal_akhir: document.getElementById('tanggalAkhir').value,
+            granulitas: document.getElementById('granulitas').value
         };
-    }
 
-    // ambil nilai data per jenis nya
-    const phValues = data.map(item => item.ph).filter(val => val !== null && val !== undefined);
-    const suhuValues = data.map(item => item.suhu).filter(val => val !== null && val !== undefined);
-    const tdsValues = data.map(item => item.tds).filter(val => val !== null && val !== undefined);
-    const turbidityValues = data.map(item => item.turbidity).filter(val => val !== null && val !== undefined);
-
-    // Helper function to calculate min, max, avg
-    function getStats(values) {
-        if (values.length === 0) return { min: 0, max: 0, avg: 0 };
-
-        const min = Math.min(...values);
-        const max = Math.max(...values);
-        const avg = values.reduce((sum, val) => sum + val, 0) / values.length;
-
-        return {
-            min: parseFloat(min.toFixed(2)),
-            max: parseFloat(max.toFixed(2)),
-            avg: parseFloat(avg.toFixed(2))
-        };
-    }
-
-    return {
-        ph: getStats(phValues),
-        suhu: getStats(suhuValues),
-        tds: getStats(tdsValues),
-        turbidity: getStats(turbidityValues)
-    };
-}
-
-// chart dashboard sections
-let phChart, suhuChart, tdsChart, turbidityChart;
-const chartConfig = {
-    type: "line",
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: { display: false },
-            tooltip: {
-                enabled: true,
-                mode: 'index',
-                intersect: false,
-            }
-        },
-
-        scales: {
-        x: {
-            display: false,
-            title: { display: true, text: "Tanggal/Waktu" }
-        },
-    },
-    },
-};
-
-// inisiasi chart
-document.addEventListener('DOMContentLoaded', function() {
-    const phCtx = document.getElementById('phChart').getContext('2d');
-    const suhuCtx = document.getElementById('suhuChart').getContext('2d');
-    const tdsCtx = document.getElementById('tdsChart').getContext('2d');
-    const turbidityCtx = document.getElementById('turbidityChart').getContext('2d');
-
-    phChart = new Chart(phCtx, {
-        ...chartConfig,
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'PH',
-                data: [],
-                borderColor: '#2EC4B6',
-                backgroundColor: '#CBF3F0',
-                tension: 0.3,
-                fill: true,
-                pointRadius: 2,
-            }]
-        }
-    });
-
-    suhuChart = new Chart(suhuCtx, {
-        ...chartConfig,
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Suhu',
-                data: [],
-                borderColor: '#FFA630',
-                backgroundColor: ' #FECD8D',
-                tension: 0.3,
-                fill: true,
-                pointRadius: 2,
-            }]
-        }
-    });
-
-    tdsChart = new Chart(tdsCtx, {
-        ...chartConfig,
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'TDS',
-                data: [],
-                borderColor: '#2EC4B6',
-                backgroundColor: '#CBF3F0',
-                tension: 0.3,
-                fill: true,
-                pointRadius: 2,
-            }]
-        }
-    });
-
-    turbidityChart = new Chart(turbidityCtx, {
-        ...chartConfig,
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Turbidity',
-                data: [],
-                borderColor: '#FFA630',
-                backgroundColor: ' #FECD8D',
-                tension: 0.3,
-                fill: true,
-                pointRadius: 2,
-            }]
-        }
-    });
-});
-
-function updateCharts(data){
-    if (!data || data.length === 0) return;
-
-        const labels = data.map(item => {
-            if (item.timestamp) {
-                const date = new Date(item.timestamp);
-                return date.toLocaleString('id-ID', {
-                    day: '2-digit', month: '2-digit', year: '2-digit',
-                    hour: '2-digit', minute: '2-digit'
-                });
-            } else if (item.tanggal) {
-                return item.tanggal;
+        fetch ('/dashboard/filter', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log(data.data);
+                currentStatisticsData = data.data; 
+                updateStatistiktabel(data.data);
+                updateCharts(data.data);
             } else {
-                return '';
+                // alert('Tidak ada data ditemukan');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan');
+        });
+    }
+
+    // Jawaban analisis AI
+    function getAIAnalysis() {
+        if (!currentStatisticsData || currentStatisticsData.length === 0) {
+            showErrorModal('Datanya ga ada brok');
+            return;
+        }
+
+        // Hitung statistik menggunakan fungsi yang sudah ada
+        const stats = hitungStatistik(currentStatisticsData);
+        
+        // Tampilkan modal analisis
+        const modal = new bootstrap.Modal(document.getElementById('aiAnalysisModal'));
+        modal.show();
+
+        // Tampilkan loading
+        document.getElementById('aiAnalysisLoading').classList.remove('d-none');
+        document.getElementById('aiAnalysisContent').innerHTML = '';
+
+        // Kirim data ke backend
+        fetch('/dashboard/get-ai-analyst-chart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                statistics: stats,
+                filter_info: currentFilterInfo,
+                raw_data: currentStatisticsData
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('aiAnalysisLoading').classList.add('d-none');
+            if (data.status === 'success') {
+                document.getElementById('aiAnalysisContent').innerHTML = data.analysis;
+            } else {
+                document.getElementById('aiAnalysisContent').innerHTML = 
+                    `<div class="alert alert-danger">Gagal: ${data.message}</div>`;
+            }
+        })
+        .catch(error => {
+            document.getElementById('aiAnalysisLoading').classList.add('d-none');
+            document.getElementById('aiAnalysisContent').innerHTML = 
+                `<div class="alert alert-danger">Error: ${error}</div>`;
+        });
+    }
+
+    // Fungsi untuk menampilkan modal error
+    function showErrorModal(message) {
+        const modal = new bootstrap.Modal(document.getElementById('errorModal'));
+        document.getElementById('errorMessage').textContent = message;
+        modal.show();
+    }
+
+    function updateStatistiktabel(data){
+        const stats = hitungStatistik(data);
+
+        // Update PH statistics
+        document.getElementById('phMax').textContent = stats.ph.max;
+        document.getElementById('phMin').textContent = stats.ph.min;
+        document.getElementById('phAvg').textContent = stats.ph.avg;
+
+        // Update Suhu statistics
+        document.getElementById('suhuMax').textContent = stats.suhu.max;
+        document.getElementById('suhuMin').textContent = stats.suhu.min;
+        document.getElementById('suhuAvg').textContent = stats.suhu.avg;
+
+        // Update TDS statistics
+        document.getElementById('tdsMax').textContent = stats.tds.max;
+        document.getElementById('tdsMin').textContent = stats.tds.min;
+        document.getElementById('tdsAvg').textContent = stats.tds.avg;
+
+        // Update Turbidity statistics
+        document.getElementById('turbidityMax').textContent = stats.turbidity.max;
+        document.getElementById('turbidityMin').textContent = stats.turbidity.min;
+        document.getElementById('turbidityAvg').textContent = stats.turbidity.avg;
+    }
+
+    function hitungStatistik(data){
+        if (!data || data.length === 0) {
+            return {
+                ph: { min: 0, max: 0, avg: 0 },
+                suhu: { min: 0, max: 0, avg: 0 },
+                tds: { min: 0, max: 0, avg: 0 },
+                turbidity: { min: 0, max: 0, avg: 0 }
+            };
+        }
+
+        // ambil nilai data per jenis nya
+        const phValues = data.map(item => item.ph).filter(val => val !== null && val !== undefined);
+        const suhuValues = data.map(item => item.suhu).filter(val => val !== null && val !== undefined);
+        const tdsValues = data.map(item => item.tds).filter(val => val !== null && val !== undefined);
+        const turbidityValues = data.map(item => item.turbidity).filter(val => val !== null && val !== undefined);
+
+        // Helper function to calculate min, max, avg
+        function getStats(values) {
+            if (values.length === 0) return { min: 0, max: 0, avg: 0 };
+
+            const min = Math.min(...values);
+            const max = Math.max(...values);
+            const avg = values.reduce((sum, val) => sum + val, 0) / values.length;
+
+            return {
+                min: parseFloat(min.toFixed(2)),
+                max: parseFloat(max.toFixed(2)),
+                avg: parseFloat(avg.toFixed(2))
+            };
+        }
+
+        return {
+            ph: getStats(phValues),
+            suhu: getStats(suhuValues),
+            tds: getStats(tdsValues),
+            turbidity: getStats(turbidityValues)
+        };
+    }
+
+    // chart dashboard sections
+    let phChart, suhuChart, tdsChart, turbidityChart;
+    const chartConfig = {
+        type: "line",
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+
+            scales: {
+            x: {
+                display: false,
+                title: { display: true, text: "Tanggal/Waktu" }
+            },
+        },
+        },
+    };
+
+    // inisiasi chart
+    document.addEventListener('DOMContentLoaded', function() {
+        const phCtx = document.getElementById('phChart').getContext('2d');
+        const suhuCtx = document.getElementById('suhuChart').getContext('2d');
+        const tdsCtx = document.getElementById('tdsChart').getContext('2d');
+        const turbidityCtx = document.getElementById('turbidityChart').getContext('2d');
+
+        phChart = new Chart(phCtx, {
+            ...chartConfig,
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'PH',
+                    data: [],
+                    borderColor: '#2EC4B6',
+                    backgroundColor: '#CBF3F0',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 2,
+                }]
             }
         });
 
-        // Ambil data sensor
-        const phData = data.map(item => item.ph);
-        const suhuData = data.map(item => item.suhu);
-        const tdsData = data.map(item => item.tds);
-        const turbidityData = data.map(item => item.turbidity);
+        suhuChart = new Chart(suhuCtx, {
+            ...chartConfig,
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Suhu',
+                    data: [],
+                    borderColor: '#FFA630',
+                    backgroundColor: ' #FECD8D',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 2,
+                }]
+            }
+        });
 
-        phChart.data.labels = labels;
-        phChart.data.datasets[0].data = phData;
-        phChart.update();
+        tdsChart = new Chart(tdsCtx, {
+            ...chartConfig,
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'TDS',
+                    data: [],
+                    borderColor: '#2EC4B6',
+                    backgroundColor: '#CBF3F0',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 2,
+                }]
+            }
+        });
 
-        suhuChart.data.labels = labels;
-        suhuChart.data.datasets[0].data = suhuData;
-        suhuChart.update();
+        turbidityChart = new Chart(turbidityCtx, {
+            ...chartConfig,
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Turbidity',
+                    data: [],
+                    borderColor: '#FFA630',
+                    backgroundColor: ' #FECD8D',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 2,
+                }]
+            }
+        });
+    });
 
-        tdsChart.data.labels = labels;
-        tdsChart.data.datasets[0].data = tdsData;
-        tdsChart.update();
+    function updateCharts(data){
+        if (!data || data.length === 0) return;
 
-        // Update Turbidity Chart
-        turbidityChart.data.labels = labels;
-        turbidityChart.data.datasets[0].data = turbidityData;
-        turbidityChart.update();
-}
+            const labels = data.map(item => {
+                if (item.timestamp) {
+                    const date = new Date(item.timestamp);
+                    return date.toLocaleString('id-ID', {
+                        day: '2-digit', month: '2-digit', year: '2-digit',
+                        hour: '2-digit', minute: '2-digit'
+                    });
+                } else if (item.tanggal) {
+                    return item.tanggal;
+                } else {
+                    return '';
+                }
+            });
+
+            // Ambil data sensor
+            const phData = data.map(item => item.ph);
+            const suhuData = data.map(item => item.suhu);
+            const tdsData = data.map(item => item.tds);
+            const turbidityData = data.map(item => item.turbidity);
+
+            phChart.data.labels = labels;
+            phChart.data.datasets[0].data = phData;
+            phChart.update();
+
+            suhuChart.data.labels = labels;
+            suhuChart.data.datasets[0].data = suhuData;
+            suhuChart.update();
+
+            tdsChart.data.labels = labels;
+            tdsChart.data.datasets[0].data = tdsData;
+            tdsChart.update();
+
+            // Update Turbidity Chart
+            turbidityChart.data.labels = labels;
+            turbidityChart.data.datasets[0].data = turbidityData;
+            turbidityChart.update();
+    }
 </script>
-
-
-
-
 {% endblock %}

@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from app.controller.sensor_controller import SensorController, SensorData
 from app.utils.auth_utils import web_session_required
 from app.utils.ai_utils import get_ai_response
-from app.utils.prompt_utils import ai_recommendation_prompt
+from app.utils.prompt_utils import ai_recommendation_prompt, ai_analysis_prompt
 from config import Config
 
 # Create blueprint
@@ -77,6 +77,52 @@ def get_ai_recommendation():
 
     except Exception as e:
         print(f"Error getting AI recommendation: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': 'AI sedang mengalami masalah, silakan coba lagi nanti.'
+        }), 500
+
+@dashboard_bp.route('/dashboard/get-ai-analyst-chart', methods=['POST'])
+@web_session_required
+def get_ai_analyst_chart():
+    try:
+        request_data = request.get_json()
+        
+        if not request_data:
+            return jsonify({
+                'status': 'error',
+                'message': 'No data provided'
+            }), 400
+        
+        # Ambil statistik yang sudah dihitung di frontend
+        statistics = request_data.get('statistics', {})
+        filter_info = request_data.get('filter_info', {})
+        raw_data = request_data.get('raw_data', [])
+        
+        if not statistics or not raw_data:
+            return jsonify({
+                'status': 'error',
+                'message': 'No statistics data available for analysis'
+            }), 404
+        
+        # Bangun prompt untuk analisis AI
+        prompt = ai_analysis_prompt(statistics, filter_info, len(raw_data))
+        
+        # Panggil AI untuk analisis
+        analysis = get_ai_response(
+            api_key=Config.AI_RECOMMENDED_API_KEY,
+            model_name="gemini-2.5-flash",
+            prompt=prompt,
+            temperature=0.3
+        )
+        
+        return jsonify({
+            'status': 'success',
+            'analysis': str(analysis)
+        }), 200
+        
+    except Exception as e:
+        print(f"Error getting AI analysis: {e}")
         return jsonify({
             'status': 'error',
             'message': 'AI sedang mengalami masalah, silakan coba lagi nanti.'
