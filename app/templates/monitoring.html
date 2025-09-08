@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="../static/css/monitoring.css">
 {% endblock %}
 
-
 {% block sidebar_monitoring %}
 class="active"
 {% endblock %}
@@ -14,46 +13,177 @@ class="active"
 <div class="container">
   <div class="camera_container">
     <div class="camera_view">
-      <!-- cam disini -->
+      <!-- PLACEHOLDER (visible when no stream) -->
+      <div id="placeholder" class="stream-placeholder">
+        <div>
+          <div style="font-size:1.6rem; margin-bottom:8px">Stream belum aktif</div>
+          <div style="font-weight:400; font-size:0.9rem; color:#999;">Hubungkan perangkat kamera atau tekan "Mulai Livestream"</div>
+        </div>
+      </div>
+
+      <!-- LOADING overlay -->
+      <div id="loading" class="loading-overlay" style="display:none; opacity:0;">
+        <div style="display:flex; gap:8px;">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
+        <div style="color:#fff; font-weight:600;">Mempersiapkan stream…</div>
+      </div>
+
+      <!-- Actual video area (canvas used) -->
+      <canvas id="liveCanvas" style="display:none;"></canvas>
+      <img id="liveImg" style="display:none;" alt="Live Stream" />
     </div>
+
+    <div class="camera-controls">
+      <button id="startBtn" class="btn-live">Mulai Livestream</button>
+      <button id="stopBtn" class="btn-stop">Matikan Livestream</button>
+    </div>
+    <div class="stream-status" id="streamStatus">Status: <span id="streamState">Offline</span></div>
   </div>
-    <div class="col-md-3">
-      <!-- toggle nyala mati cam disini -->
-      <button class="btn btn-light fw-bold w-100 mt-4 box_toggle_camera">
-          <svg class="svg_camera" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#FFA630" d="m20.713 8.128l-.246.566a.506.506 0 0 1-.934 0l-.246-.566a4.36 4.36 0 0 0-2.22-2.25l-.759-.339a.53.53 0 0 1 0-.963l.717-.319a4.37 4.37 0 0 0 2.251-2.326l.253-.611a.506.506 0 0 1 .942 0l.253.61a4.37 4.37 0 0 0 2.25 2.327l.718.32a.53.53 0 0 1 0 .962l-.76.338a4.36 4.36 0 0 0-2.219 2.251M22 20v-9.341A6 6 0 0 1 20 11c-.925 0-1.8-.21-2.583-.583a6 6 0 1 1-2.834-2.834A6 6 0 0 1 14 5c0-.701.12-1.374.341-2H9L7 5H3a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1m-10-3a4 4 0 1 1 0-8a4 4 0 0 1 0 8"/></svg>
-          Camera
-      </button>
-  </div>
+
   <div class="boxes">
     <div class="box box1">
-      <!-- Konten box 1 sementara statis-->
        <span class="text">Ikan Terindikasi Mati</span>
-         <span class="number">N/A</span>
-
+       <span class="number" id="deadCount">N/A</span>
     </div>
     <div class="box box2">
-      <!-- Konten box 2 sementara statis-->
        <span class="text">Ikan Terindikasi Sakit</span>
-         <span class="number">N/A</span>
-
+       <span class="number" id="sickCount">N/A</span>
     </div>
   </div>
 
   <!-- analisis kematian ikan disini -->
-   <div class="container_analisis">
-     <span class="title3">Analisis Kematian Oleh AI</span>
-     <div class="box_analisis_ai">
-      <!-- content analisis -->
-       <div></div>
-     </div>
-     <span style="font-weight: 300;">Respons AI dapat mengandung kekeliruan. Mohon diperiksa ulang</span>
-
-   </div>
-
+  <div class="container_analisis">
+    <span class="title3">Analisis Kematian Oleh AI</span>
+    <div class="box_analisis_ai">
+      <div id="aiOutput">Belum ada data analisis.</div>
+    </div>
+    <span style="font-weight: 300;">Respons AI dapat mengandung kekeliruan. Mohon diperiksa ulang</span>
+  </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
+<script>
+const WS_URL = "{{ ws_url if ws_url is defined else 'ws://127.0.0.1:8000' }}";
 
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const placeholder = document.getElementById('placeholder');
+const loading = document.getElementById('loading');
+const liveCanvas = document.getElementById('liveCanvas');
+const liveImg = document.getElementById('liveImg');
+const streamState = document.getElementById('streamState');
+const deadCountEl = document.getElementById('deadCount');
+const sickCountEl = document.getElementById('sickCount');
 
+let ws = null;
+let waitingForFirstFrame = false;
+let firstFrameTimeout = null;
+
+function showPlaceholder() {
+  placeholder.style.opacity = 1;
+  placeholder.style.pointerEvents = 'auto';
+  liveCanvas.style.display = 'none';
+  liveImg.style.display = 'none';
+  loading.style.display = 'none';
+  streamState.innerText = 'Offline';
+}
+
+function showLoading() {
+  placeholder.style.opacity = 0.35;
+  loading.style.display = 'flex';
+  liveCanvas.style.display = 'none';
+  liveImg.style.display = 'none';
+  streamState.innerText = 'Starting...';
+}
+
+function showLive() {
+  placeholder.style.opacity = 0;
+  loading.style.display = 'none';
+  liveImg.style.display = 'block';
+  liveCanvas.style.display = 'none';
+  streamState.innerText = 'Live';
+}
+
+async function drawFrame(arraybuffer) {
+  try {
+    const blob = new Blob([arraybuffer], { type: 'image/jpeg' });
+    liveImg.src = URL.createObjectURL(blob);
+    setTimeout(() => URL.revokeObjectURL(liveImg.src), 2000);
+  } catch (err) {
+    console.error('Frame decode error', err);
+  }
+}
+
+function openWS() {
+  if (ws) return;
+  ws = new WebSocket(WS_URL);
+  ws.binaryType = 'arraybuffer';
+  showLoading();
+  waitingForFirstFrame = true;
+
+  firstFrameTimeout = setTimeout(() => {
+    if (waitingForFirstFrame) {
+      showPlaceholder();
+      try { ws.close(); } catch(e) {}
+      ws = null;
+    }
+  }, 15000);
+
+  ws.onopen = () => {
+    streamState.innerText = 'Connected (waiting frame)';
+  };
+
+  ws.onmessage = (evt) => {
+    if (typeof evt.data === 'string') {
+      try {
+        const data = JSON.parse(evt.data);
+        if (data.type === 'stats') {
+          deadCountEl.innerText = data.dead ?? '0';
+          sickCountEl.innerText = data.sick ?? '0';
+        }
+      } catch(e) {
+        console.log('ws text message:', evt.data);
+      }
+      return;
+    }
+
+    const arraybuffer = evt.data;
+    if (waitingForFirstFrame) {
+      waitingForFirstFrame = false;
+      clearTimeout(firstFrameTimeout);
+      showLive();
+    }
+    drawFrame(arraybuffer);
+  };
+
+  ws.onclose = () => {
+    ws = null;
+    showPlaceholder();
+  };
+
+  ws.onerror = () => {
+    try { ws.close(); } catch(e){}
+  };
+}
+
+function closeWS() {
+  if (!ws) return;
+  try { ws.close(); } catch(e) {}
+  ws = null;
+  showPlaceholder();
+}
+
+startBtn.addEventListener('click', openWS);
+stopBtn.addEventListener('click', () => {
+  closeWS();
+  deadCountEl.innerText = 'N/A';
+  sickCountEl.innerText = 'N/A';
+});
+
+showPlaceholder();
+</script>
 {% endblock %}

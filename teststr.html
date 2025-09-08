@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raspberry Pi Camera Stream</title>
+  <style>
+    body {
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+      font-family: sans-serif;
+    }
+    #stream {
+      max-width: 90%;
+      max-height: 80vh;
+      border: 3px solid #fff;
+      border-radius: 10px;
+      background: #000;
+    }
+    .controls {
+      margin-top: 10px;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background: #28a745;
+      color: white;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button.disconnect {
+      background: #dc3545;
+    }
+    #status {
+      margin-top: 5px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📷 Pi Camera Stream</h1>
+  <img id="stream" src="" alt="Waiting for stream..." />
+  <div class="controls">
+    <button id="connectBtn">Connect</button>
+    <button id="disconnectBtn" class="disconnect">Disconnect</button>
+    <div id="status">Status: Disconnected</div>
+  </div>
+
+  <script>
+    let ws;
+    const streamImg = document.getElementById("stream");
+    const statusEl = document.getElementById("status");
+
+    // Ganti ini dengan URL Cloudflare Tunnel kamu
+    const WS_URL = "wss://nilocam.my.id";
+
+    function connect() {
+      ws = new WebSocket(WS_URL);
+      ws.binaryType = "arraybuffer";
+
+      ws.onopen = () => {
+        statusEl.textContent = "Status: Connected";
+        console.log("Connected to WS server");
+      };
+
+      ws.onmessage = (event) => {
+        const blob = new Blob([event.data], { type: "image/jpeg" });
+        streamImg.src = URL.createObjectURL(blob);
+      };
+
+      ws.onclose = () => {
+        statusEl.textContent = "Status: Disconnected";
+        console.log("WebSocket closed");
+      };
+
+      ws.onerror = (err) => {
+        console.error("WebSocket error:", err);
+        statusEl.textContent = "Status: Error";
+      };
+    }
+
+    function disconnect() {
+      if (ws) {
+        ws.close();
+        ws = null;
+        statusEl.textContent = "Status: Disconnected";
+      }
+    }
+
+    document.getElementById("connectBtn").addEventListener("click", connect);
+    document.getElementById("disconnectBtn").addEventListener("click", disconnect);
+
+    // Opsional: langsung connect otomatis saat halaman dibuka
+    window.addEventListener("load", () => {
+      connect();
+    });
+  </script>
+</body>
+</html>
