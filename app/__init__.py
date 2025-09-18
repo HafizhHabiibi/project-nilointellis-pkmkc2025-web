@@ -12,6 +12,9 @@ from app.routes.chatbot_route import chatbot_bp
 from app.routes.telegram_route import telegram_bp
 from app.routes.sensor_route import sensor_bp
 
+# tambahan scheduer untuk computer vision
+from app.utils.scheduler import start_scheduler 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -31,6 +34,9 @@ def create_app():
     app.register_blueprint(chatbot_bp)
     app.register_blueprint(telegram_bp)
     app.register_blueprint(sensor_bp)
+
+    # aktifkan scheduler setelah semua siap
+    start_scheduler(app)
 
     return app, websocket
 

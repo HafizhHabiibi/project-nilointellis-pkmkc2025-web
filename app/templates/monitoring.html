@@ -31,7 +31,7 @@ class="active"
         <div style="color:#fff; font-weight:600;">Mempersiapkan stream…</div>
       </div>
 
-      <!-- Actual video area (canvas used) -->
+      <!-- Actual video area -->
       <canvas id="liveCanvas" style="display:none;"></canvas>
       <img id="liveImg" style="display:none;" alt="Live Stream" />
     </div>
@@ -46,11 +46,17 @@ class="active"
   <div class="boxes">
     <div class="box box1">
        <span class="text">Ikan Terindikasi Mati</span>
-       <span class="number" id="deadCount">N/A</span>
+       <span class="number" id="deadStatus">N/A</span>
+       <div id="lastUpdated" style="font-size:0.8rem; font-weight:300; margin-top:4px;">
+          Last Updated: -
+       </div>
     </div>
     <div class="box box2">
        <span class="text">Ikan Terindikasi Sakit</span>
        <span class="number" id="sickCount">N/A</span>
+       <div id="lastUpdatedSick" style="font-size:0.8rem; font-weight:300; margin-top:4px;">
+          Last Updated: -
+       </div>
     </div>
   </div>
 
@@ -76,8 +82,10 @@ const loading = document.getElementById('loading');
 const liveCanvas = document.getElementById('liveCanvas');
 const liveImg = document.getElementById('liveImg');
 const streamState = document.getElementById('streamState');
-const deadCountEl = document.getElementById('deadCount');
+const deadStatusEl = document.getElementById('deadStatus');
 const sickCountEl = document.getElementById('sickCount');
+const lastUpdatedEl = document.getElementById('lastUpdated');
+const lastUpdatedSickEl = document.getElementById('lastUpdatedSick');
 
 let ws = null;
 let waitingForFirstFrame = false;
@@ -138,26 +146,14 @@ function openWS() {
   };
 
   ws.onmessage = (evt) => {
-    if (typeof evt.data === 'string') {
-      try {
-        const data = JSON.parse(evt.data);
-        if (data.type === 'stats') {
-          deadCountEl.innerText = data.dead ?? '0';
-          sickCountEl.innerText = data.sick ?? '0';
-        }
-      } catch(e) {
-        console.log('ws text message:', evt.data);
+    if (typeof evt.data !== 'string') {
+      if (waitingForFirstFrame) {
+        waitingForFirstFrame = false;
+        clearTimeout(firstFrameTimeout);
+        showLive();
       }
-      return;
+      drawFrame(evt.data);
     }
-
-    const arraybuffer = evt.data;
-    if (waitingForFirstFrame) {
-      waitingForFirstFrame = false;
-      clearTimeout(firstFrameTimeout);
-      showLive();
-    }
-    drawFrame(arraybuffer);
   };
 
   ws.onclose = () => {
@@ -180,10 +176,40 @@ function closeWS() {
 startBtn.addEventListener('click', openWS);
 stopBtn.addEventListener('click', () => {
   closeWS();
-  deadCountEl.innerText = 'N/A';
-  sickCountEl.innerText = 'N/A';
 });
 
 showPlaceholder();
+
+// ------- REFRESH STATUS -------
+async function fetchDeadStatus() {
+  try {
+    const res = await fetch("/api/monitoring/status");
+    const data = await res.json();
+    deadStatusEl.innerText = (data.status && data.status.toLowerCase() === "ada") ? "Ada" : "Tidak Ada";
+    lastUpdatedEl.innerText = `Last Updated: ${data.timestamp ?? "-"}`;
+  } catch (e) {
+    console.error("Fetch dead status error", e);
+  }
+}
+
+async function fetchSickStatus() {
+  try {
+    const res = await fetch("/api/monitoring/health");
+    const data = await res.json();
+    sickCountEl.innerText = data.count_sick ?? '0';
+    lastUpdatedSickEl.innerText = `Last Updated: ${data.timestamp ?? "-"}`;
+  } catch (e) {
+    console.error("Fetch sick status error", e);
+  }
+}
+
+// refresh tiap 10 detik
+setInterval(() => {
+  fetchDeadStatus();
+  fetchSickStatus();
+}, 10000);
+
+fetchDeadStatus();
+fetchSickStatus();
 </script>
 {% endblock %}
