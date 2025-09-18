@@ -10,6 +10,7 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import websockets
 import asyncio
+from telegram_utils import send_notif
 
 # Load env
 load_dotenv()
@@ -132,6 +133,8 @@ async def run_pipeline():
     if confirmed_dead: #jika setelah analisis dengan deepsort tervalidasi ada yang mati , maka menjalankan...
         save_status_to_mongo("ada ikan mati")
         # TAMBAHKAN PEMANGGILAN FUNGSI UNTUK NOTIF KE TELEGRAM DI SINI 
+        pesan = "*ada ikan mati woii!! coba dicek , kalo scam maaf yaa, masih prototipe hehe..*"
+        send_notif(pesan)
 
         # TAMBAHKAN PEMANGGILAN FUNGSI UNTUK ANALISIS IKAN MATI DENGAN GEN AI DI SINI
 
