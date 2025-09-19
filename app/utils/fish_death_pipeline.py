@@ -10,7 +10,7 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import websockets
 import asyncio
-from telegram_utils import send_notif
+from app.utils.telegram_utils import send_notif
 
 # Load env
 load_dotenv()
