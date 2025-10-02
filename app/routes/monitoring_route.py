@@ -58,19 +58,19 @@ def get_death_analysis():
         status = data.get("status", "tidak ada ikan mati")
         timestamp = data.get("timestamp")
         
-        # # Ambil data sensor 24 jam terakhir
-        # sensor_controller = SensorData()
-        # sensor_data, sensor_count = sensor_controller.get_data_24_jam_terakhir()
+        # Ambil data sensor 24 jam terakhir
+        sensor_controller = SensorData()
+        sensor_data, sensor_count = sensor_controller.get_data_24_jam_terakhir()
         
-        # data dummy untuk simulasi
-        sensor_data = [
-            {'suhu': 28.5, 'ph': 7.2, 'tds': 300, 'turbidity': 5, 'timestamp': '2025-09-30T07:00:00Z'},
-            {'suhu': 29.0, 'ph': 7.0, 'tds': 320, 'turbidity': 6, 'timestamp': '2025-09-30T07:10:00Z'},
-            {'suhu': 30.0, 'ph': 6.8, 'tds': 350, 'turbidity': 7, 'timestamp': '2025-09-30T07:20:00Z'},
-            {'suhu': 30.0, 'ph': 6.8, 'tds': 350, 'turbidity': 7, 'timestamp': '2025-09-30T07:20:00Z'},
-            {'suhu': 40.0, 'ph': 12.8, 'tds': 950, 'turbidity': 1000, 'timestamp': '2025-09-30T07:20:00Z'},
-        ]
-        sensor_count = len(sensor_data)
+        # # data dummy untuk simulasi
+        # sensor_data = [
+        #     {'suhu': 28.5, 'ph': 7.2, 'tds': 300, 'turbidity': 5, 'timestamp': '2025-09-30T07:00:00Z'},
+        #     {'suhu': 29.0, 'ph': 7.0, 'tds': 320, 'turbidity': 6, 'timestamp': '2025-09-30T07:10:00Z'},
+        #     {'suhu': 30.0, 'ph': 6.8, 'tds': 350, 'turbidity': 7, 'timestamp': '2025-09-30T07:20:00Z'},
+        #     {'suhu': 30.0, 'ph': 6.8, 'tds': 350, 'turbidity': 7, 'timestamp': '2025-09-30T07:20:00Z'},
+        #     {'suhu': 40.0, 'ph': 12.8, 'tds': 950, 'turbidity': 1000, 'timestamp': '2025-09-30T07:20:00Z'},
+        # ]
+        # sensor_count = len(sensor_data)
         
         # Validasi data sensor
         if not sensor_data or (isinstance(sensor_data, dict) and sensor_data.get('error')):
