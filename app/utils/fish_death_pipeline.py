@@ -1,25 +1,24 @@
-import os
 import cv2
 import numpy as np
 import datetime
 from pathlib import Path
-from dotenv import load_dotenv
 from ultralytics import YOLO
 from deep_sort_realtime.deepsort_tracker import DeepSort
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
+from config import Config
 import websockets
 import asyncio
 from app.utils.telegram_utils import send_notif
 
-# Load env
-load_dotenv()
-MONGO_URI = os.getenv("MONGODB_URI")
-MONGO_DB_NAME = os.getenv("DB_DATABASE", "nilo")
-MONGO_COLLECTION_NAME = os.getenv("MONGO_COLLECTION_MONITORING", "monitoring")
 
-WS_URL = os.getenv("NILOCAM_WSS_URL", "wss://nilocam.my.id")
-MODEL_PATH = os.getenv("YOLO_MODEL_PATH", "app/model_ai/best.pt")
+# mongo connection
+MONGO_URI = Config.MONGODB_URI
+MONGO_DB_NAME = Config.MONGODB_DATABASE
+MONGO_COLLECTION_NAME = Config.MONGO_COLLECTION_MONITORING
+
+WS_URL = Config.NILOCAM_WSS_URL
+MODEL_PATH = Config.MODEL_PATH
 
 # Load YOLOv8
 yolo_model = YOLO(MODEL_PATH)

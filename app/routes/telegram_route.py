@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
-from ..utils.telegram_utils import stop_chat, sokap
+from app.utils.telegram_utils import stop_chat, sokap
+
 
 telegram_bp = Blueprint('telegram', __name__)
 

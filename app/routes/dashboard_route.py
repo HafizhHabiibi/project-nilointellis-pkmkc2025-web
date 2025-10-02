@@ -5,6 +5,7 @@ from app.utils.ai_utils import get_ai_response
 from app.utils.prompt_utils import ai_recommendation_prompt, ai_analysis_prompt
 from config import Config
 
+
 # Create blueprint
 dashboard_bp = Blueprint('dashboard', __name__)
 

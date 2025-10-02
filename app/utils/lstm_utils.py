@@ -1,4 +1,3 @@
-import os
 import pymongo
 import pandas as pd
 import numpy as np
@@ -7,16 +6,15 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-from dotenv import load_dotenv
+from config import Config
 import tensorflow as tf
 from pathlib import Path
 
-# Load .env
-load_dotenv()
 
-MONGO_URI = os.getenv("MONGODB_URI")
-MONGO_DB_NAME = os.getenv("DB_DATABASE", "nilo")
-MONGO_COLLECTION_NAME = os.getenv("MONGO_COLLECTION_NAME", "sensor")
+# mongo connection
+MONGO_URI = Config.MONGODB_URI
+MONGO_DB_NAME = Config.MONGODB_DATABASE
+MONGO_COLLECTION_NAME = Config.MONGODB_COLLECTION_SENSOR
 
 # Load scaler & model -- AKAN DIPERBARUI NEXT TIME SETELAH MODEL VALID DENGAN DATA REAL
 

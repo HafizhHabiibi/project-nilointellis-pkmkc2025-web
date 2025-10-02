@@ -1,28 +1,24 @@
 # app/utils/fish_sick_pipeline.py
-import os
 import cv2
 import time
 import datetime
 import numpy as np
 import asyncio
 import websockets
-from dotenv import load_dotenv
+from config import Config
 from ultralytics import YOLO
 from deep_sort_realtime.deepsort_tracker import DeepSort
 from pymongo import MongoClient
 from statistics import median
 
-# -------------------------------
-# CONFIG via .env
-# -------------------------------
-load_dotenv()
 
-MONGO_URI = os.getenv("MONGODB_URI")
-MONGO_DB_NAME = os.getenv("DB_DATABASE", "nilo")
-MONGO_COLLECTION_NAME = os.getenv("MONGO_COLLECTION_MONITORING_HEALTH", "monitoring_health")
+# mongo connection
+MONGO_URI = Config.MONGODB_URI
+MONGO_DB_NAME = Config.MONGODB_DATABASE
+MONGO_COLLECTION_NAME = Config.MONGO_COLLECTION_MONITORING_HEALTH
 
-WS_URL = os.getenv("NILOCAM_WSS_URL", "wss://nilocam.my.id")
-MODEL_PATH = os.getenv("YOLO_MODEL_PATH", "app/model_ai/best.pt")
+WS_URL = Config.NILOCAM_WSS_URL
+MODEL_PATH = Config.MODEL_PATH
 
 CAPTURE_DURATION = 30      # detik observasi
 CAPTURE_FPS = 1            # fps sampling

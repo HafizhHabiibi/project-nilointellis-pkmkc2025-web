@@ -2,14 +2,23 @@ import requests
 from flask import current_app
 from pymongo import MongoClient
 from datetime import datetime
+from config import Config
+
+
+# MongoDB setup
+MONGO_URI = Config.MONGODB_URI
+MONGO_DB_NAME = Config.MONGODB_DATABASE
+MONGO_DB_COLLECTION_CHAT_ID = Config.MONGODB_COLLECTION_CHAT_ID
+
+TELEGRAM_BOT_TOKEN = Config.TELEGRAM_BOT_TOKEN
 
 def get_db():
-    client = MongoClient(current_app.config["MONGODB_URI"])
-    return client["nilo"]
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+    return client[MONGO_DB_NAME]
 
 def save_chat_id(chat_id):
     db = get_db()
-    collection = db["chat_id_collection"]
+    collection = db[MONGO_DB_COLLECTION_CHAT_ID]
     if not collection.find_one({"chat_id":chat_id}):
         collection.insert_one({
             "chat_id": chat_id,
@@ -18,7 +27,7 @@ def save_chat_id(chat_id):
 
 def delete_chat_id(chat_id):
     db = get_db()
-    collection = db["chat_id_collection"]
+    collection = db[MONGO_DB_COLLECTION_CHAT_ID]
     result = collection.delete_one({"chat_id": chat_id})
     if result.deleted_count > 0:
         print(f"Chat ID {chat_id} Berhasil Dihapus")
@@ -27,11 +36,11 @@ def delete_chat_id(chat_id):
 
 def get_chat_id():
     db = get_db()
-    collection = db["chat_id_collection"]
+    collection = db[MONGO_DB_COLLECTION_CHAT_ID]
     return [doc["chat_id"] for doc in collection.find()]
 
 def send_notif(message):
-    token = current_app.config['TELEGRAM_BOT_TOKEN']
+    token = Config.TELEGRAM_BOT_TOKEN
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     chat_ids = get_chat_id()
 
@@ -53,7 +62,7 @@ def sokap(chat_id):
         "*👋📡 Selamat datang di NiloIntellisBOT!*\n\n"
         "PKM-KC Universitas Teknologi Yogyakarta 2025"
     )
-    token = current_app.config['TELEGRAM_BOT_TOKEN']
+    token = Config.TELEGRAM_BOT_TOKEN
     url = f"https://api.telegram.org/bot{token}/sendMessage"
 
     payload = {
@@ -73,7 +82,7 @@ def stop_chat(chat_id):
         "*❌ Notifikasi dari NiloIntellis Bot berhenti!* \n\n"
         "Ketik */start* untuk menerima notifikasi kembali!"
     )
-    token = current_app.config['TELEGRAM_BOT_TOKEN']
+    token = Config.TELEGRAM_BOT_TOKEN
     url = f"https://api.telegram.org/bot{token}/sendMessage"
 
     payload = {

@@ -60,6 +60,49 @@ def ai_analysis_prompt(stats, filter_info, data_count):
     Format jawaban dengan struktur yang jelas dan mudah dipahami. Gunakan bahasa Indonesia yang baik dan benar. Maksimal 150 kata.
     """
     return prompt
+
+def death_analysis_prompt(stats, data_count, granulitas):
+    """Fungsi untuk membangun prompt analisis kematian ikan akibat data sensor 1 hari ke belakang"""
+    return f"""
+    Anda adalah ilmuwan yang ahli dalam mengidentifikasi penyebab kematian ikan berdasarkan data kualitas air 
+    seperti data suhu air, pH air, kejernihan air, dan padatan terlarut.
+    Berikut data sensor yang diperoleh:
+    
+    INFORMASI DATA:
+    - Periode: 24 jam terakhir
+    - Granulitas: {granulitas}
+    - Total Data Points: {data_count}
+    
+    STATISTIK DATA:
+    pH Air:
+    - Minimum: {stats.get('ph', {}).get('min', 0)}
+    - Maksimum: {stats.get('ph', {}).get('max', 0)}
+    - Rata-rata: {stats.get('ph', {}).get('avg', 0)}    
+    
+    Suhu Air:
+    - Minimum: {stats.get('suhu', {}).get('min', 0)}°C
+    - Maksimum: {stats.get('suhu', {}).get('max', 0)}°C
+    - Rata-rata: {stats.get('suhu', {}).get('avg', 0)}°C
+    
+    TDS (Total Dissolved Solids):
+    - Minimum: {stats.get('tds', {}).get('min', 0)} ppm
+    - Maksimum: {stats.get('tds', {}).get('max', 0)} ppm
+    - Rata-rata: {stats.get('tds', {}).get('avg', 0)} ppm
+    
+    Turbidity (Kekeruhan):
+    - Minimum: {stats.get('turbidity', {}).get('min', 0)} NTU
+    - Maksimum: {stats.get('turbidity', {}).get('max', 0)} NTU
+    - Rata-rata: {stats.get('turbidity', {}).get('avg', 0)} NTU
+    
+    Berdasarkan data di atas, berikan analisis kematian ikan secara komprehensif yang mencakup:
+    1. PENYEBAB KEMATIAN: Identifikasi penyebab utama kematian ikan
+    2. KONDISI KRITIS: Parameter yang paling berkontribusi terhadap kematian
+    3. REKOMENDASI TINDAKAN: Saran spesifik untuk mencegah kematian di masa depan dalam bentuk deskripsi dan bukan bullet point.
+    
+    Format jawaban dengan struktur yang jelas dan mudah dipahami.
+    Gunakan bahasa Indonesia yang baik dan benar.
+    Maksimal 150 kata.
+    """
     
 def role_chatbot():
     """Fungsi untuk mendapatkan role chatbot yang digunakan dalam sesi chat"""

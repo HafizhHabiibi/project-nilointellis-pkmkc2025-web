@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, session
-from app.controller.user_controller import UserController
 from app.utils.auth_utils import web_session_required
 from app.utils.lstm_utils import fetch_last_data, predict_future
+
 
 # Create blueprint
 prediksi_bp = Blueprint('prediksi', __name__)
