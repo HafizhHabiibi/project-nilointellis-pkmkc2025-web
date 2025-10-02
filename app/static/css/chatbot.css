@@ -10,6 +10,10 @@
   --text-gray: #6c757d;
 }
 
+html {
+  font-size: 12px;
+}
+
 .chat-container {
   margin: 0 auto;
   height: calc(100vh - 8rem);
@@ -281,6 +285,6 @@
 
   .message-text {
     padding: 0.8rem 1rem;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 }
