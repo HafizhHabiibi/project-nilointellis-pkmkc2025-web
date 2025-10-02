@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 
-ANALYSIS_FILE = Path("app/test/death_analysis.json")
+ANALYSIS_FILE = Path("app/utils/death_analysis.json")
 
 def load_analysis():
     if ANALYSIS_FILE.exists():
