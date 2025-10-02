@@ -148,11 +148,9 @@ async function sendDeathAnalysis(status, timestamp) {
   }
 }
 
-// refresh tiap 15 detik
+// refresh tiap 10 detik
 setInterval(() => {
+  console.log("Refresh at:", new Date().toLocaleTimeString());
   fetchDeadStatus();
   fetchSickStatus();
 }, 10000);
-
-fetchDeadStatus();
-fetchSickStatus();
