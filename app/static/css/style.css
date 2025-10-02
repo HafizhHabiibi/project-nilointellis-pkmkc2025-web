@@ -149,7 +149,7 @@ body::-webkit-scrollbar{
 
 .title2{
     font-size: 2.25rem;
-    /* margin-top: 2.4rem; */
+    margin-top: 1.2rem;
     padding-top: 3rem;
 }
 
@@ -361,8 +361,6 @@ body::-webkit-scrollbar{
         display: flex;
         top: 0.75rem;
         left: 0.8rem;
-        width: 3.5rem;
-        height: 3.5rem;
     }
 
     .hamburger-btn svg {
