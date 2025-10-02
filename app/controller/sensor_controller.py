@@ -3,7 +3,7 @@ from flask_socketio import emit
 from app.models.sensor_model import SensorModel
 import time
 import threading
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class SensorController:
   def __init__(self, websocket=None):
@@ -82,4 +82,24 @@ class SensorData:
 
       except Exception as e:
         print(f"Error getting sensor summary: {e}")
+        return {'error': str(e)}
+      
+    def get_data_24_jam_terakhir(self, granulitas="10 menit"):
+      try:
+        tanggal_akhir = datetime.utcnow()
+        tanggal_awal = tanggal_akhir - timedelta(hours=24)
+        
+        data = self.sensorModel.get_sensor_statistik(tanggal_awal, tanggal_akhir, granulitas)
+        
+        if data:
+              for item in data:
+                  item['id'] = str(item['_id'])
+                  item['timestamp'] = item['timestamp'].isoformat()
+                  del item['_id']
+              return data, len(data)
+        else:
+              print("No data found for the last 24 hours.")
+              return []
+      except Exception as e:
+        print(f"Error getting last 24 hours sensor data: {e}")
         return {'error': str(e)}
