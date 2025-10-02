@@ -64,7 +64,7 @@ class="active"
   <div class="container_analisis">
     <span class="title3">Analisis Kematian Oleh AI</span>
     <div class="box_analisis_ai">
-      <div id="aiOutput">Belum ada data analisis.</div>
+      <div id="aiOutput" style="word-wrap:break-word; text-align:justify; display:flex; flex-direction: column; gap: 0; font-size: 1.1rem; line-height: 1.2;">{{ analysis|safe }}</div>
     </div>
     <span style="font-weight: 300;">Respons AI dapat mengandung kekeliruan. Mohon diperiksa ulang</span>
   </div>
@@ -185,8 +185,9 @@ async function fetchDeadStatus() {
   try {
     const res = await fetch("/api/monitoring/status");
     const data = await res.json();
-    deadStatusEl.innerText = (data.status && data.status.toLowerCase() === "ada") ? "Ada" : "Tidak Ada";
+    deadStatusEl.innerText = (data.status && data.status.toLowerCase() === "ada ikan mati") ? "Ada" : "Tidak Ada";
     lastUpdatedEl.innerText = `Last Updated: ${data.timestamp ?? "-"}`;
+    sendDeathAnalysis(data.status, data.timestamp);
   } catch (e) {
     console.error("Fetch dead status error", e);
   }
@@ -203,7 +204,26 @@ async function fetchSickStatus() {
   }
 }
 
-// refresh tiap 10 detik
+async function sendDeathAnalysis(status, timestamp) {
+  try {
+    const res = await fetch("/monitoring/get-death-analysis", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status, timestamp })
+    });
+    const result = await res.json();
+
+    if (result.status === "success" && result.analysis) {
+      document.getElementById("aiOutput").innerHTML = result.analysis;
+    } else {
+      document.getElementById("aiOutput").innerText = "";
+    }
+  } catch (e) {
+    console.error("Send death analysis error", e);
+  }
+}
+
+// refresh tiap 15 detik
 setInterval(() => {
   fetchDeadStatus();
   fetchSickStatus();
