@@ -16,7 +16,7 @@ def start_scheduler(app):
         scheduler.add_job(
             lambda: asyncio.run(run_fish_death_pipeline()),
             trigger='interval',
-            minutes=5,       # ⏱ interval 5 menit untuk ikan mati
+            minutes=20,       # ⏱ interval 5 menit untuk ikan mati
             id='fish_death_job',
             replace_existing=True
         )
@@ -25,7 +25,7 @@ def start_scheduler(app):
         scheduler.add_job(
             lambda: asyncio.run(run_fish_sick_pipeline()),
             trigger='interval',
-            minutes=10,      # ⏱ interval 10 menit untuk ikan sakit
+            minutes=30,      # ⏱ interval 10 menit untuk ikan sakit
             next_run_time=datetime.now() + timedelta(minutes=2),  
             # ↑ offset otomatis 2 menit setelah server start
             id='fish_sick_job',

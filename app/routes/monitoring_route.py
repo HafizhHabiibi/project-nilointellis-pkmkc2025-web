@@ -10,12 +10,13 @@ import os
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 
+
 monitoring_bp = Blueprint('monitoring', __name__)
 
-MONGO_URI = os.getenv("MONGODB_URI")
-MONGO_DB_NAME = os.getenv("DB_DATABASE", "nilo")
-MONGO_COLLECTION_NAME = os.getenv("MONGO_COLLECTION_MONITORING", "status_ikan")
-MONGO_COLLECTION_HEALTH = os.getenv("MONGO_COLLECTION_MONITORING_HEALTH", "monitoring_health")
+MONGO_URI = Config.MONGODB_URI
+MONGO_DB_NAME = Config.MONGODB_DATABASE
+MONGO_COLLECTION_NAME = Config.MONGO_COLLECTION_MONITORING
+MONGO_COLLECTION_HEALTH = Config.MONGO_COLLECTION_MONITORING_HEALTH
 
 def get_mongo_client():
     return MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
@@ -24,7 +25,7 @@ def get_mongo_client():
 @monitoring_bp.route('/monitoring')
 @web_session_required
 def monitoring():
-    wss_url = os.getenv('NILOCAM_WSS_URL', 'wss://nilocam.my.id')
+    wss_url = Config.NILOCAM_WSS_URL
     return render_template('monitoring.html', ws_url=wss_url)
 
 # ---------- API: IKAN MATI ----------

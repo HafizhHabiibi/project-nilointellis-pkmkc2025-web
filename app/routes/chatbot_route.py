@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, session
 from config import Config
-from app.controller.user_controller import UserController
 from app.utils.auth_utils import web_session_required
 from app.utils.prompt_utils import role_chatbot
 from app.utils.ai_utils import get_ai_response

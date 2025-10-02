@@ -1,22 +1,23 @@
-import os
-from dotenv import load_dotenv
 from flask import Blueprint, request, jsonify, Response
 from datetime import datetime, timedelta, timezone
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from bson.json_util import dumps
-from ..utils.telegram_utils import send_notif
-from ..utils.konversiwib_utils import konversi_wib
+from config import Config
+from app.utils.telegram_utils import send_notif
+from app.utils.konversiwib_utils import konversi_wib
 
 sensor_bp = Blueprint('sensor', __name__)
 
-load_dotenv()
+# MongoDB setup
+MONGO_URI = Config.MONGODB_URI
+MONGO_DB_NAME = Config.MONGODB_DATABASE
+MONGODB_COLLECTION_SENSOR = Config.MONGODB_COLLECTION_SENSOR
 
-# MongoDB connection via .env
-MONGO_URI = os.getenv("MONGODB_URI")
+# CLient setup
 client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
-db = client["nilo"]
-collection = db["sensor"]
+db = client[MONGO_DB_NAME]
+collection = db[MONGODB_COLLECTION_SENSOR]
 
 # Global variable untuk data terakhir
 data_terakhir = {}

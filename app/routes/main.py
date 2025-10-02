@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from app.controller.user_controller import UserController
 from app.utils.auth_utils import web_session_required
 
+
 # Create blueprint
 main_bp = Blueprint('main', __name__)
 
