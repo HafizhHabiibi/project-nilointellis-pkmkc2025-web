@@ -42,7 +42,7 @@ def simpan_data():
     ph_min, ph_max = 6.5, 8.5
     temp_min, temp_max = 25.0, 32.0
     tds_min, tds_max = 300, 800
-    turbidity_min, turbidity_max = 0, 3000
+    turbidity_min, turbidity_max = 0, 2000
 
     suhu = data.get('suhu')
     ph = data.get('ph')
