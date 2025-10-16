@@ -132,7 +132,7 @@ async def run_pipeline():
     if confirmed_dead: #jika setelah analisis dengan deepsort tervalidasi ada yang mati , maka menjalankan...
         save_status_to_mongo("ada ikan mati")
         # TAMBAHKAN PEMANGGILAN FUNGSI UNTUK NOTIF KE TELEGRAM DI SINI 
-        pesan = "*ada ikan mati woii!! coba dicek , kalo scam maaf yaa, masih prototipe hehe..*"
+        pesan = "*ALERT!! TERDETEKSI IKAN MATI OLEH SISTEM.*"
         send_notif(pesan)
 
         # TAMBAHKAN PEMANGGILAN FUNGSI UNTUK ANALISIS IKAN MATI DENGAN GEN AI DI SINI
