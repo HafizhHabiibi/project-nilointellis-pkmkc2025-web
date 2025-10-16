@@ -28,10 +28,10 @@ def run_prediksi():
             "status": "success",
             "data": {
                 "timestamps": df_pred.index.strftime("%Y-%m-%d %H:%M").tolist(),
-                "ph": df_pred["ph"].round(2).tolist(),
                 "suhu": df_pred["suhu"].round(2).tolist(),
-                "turbidity": df_pred["turbidity"].round(2).tolist(),
+                "ph": df_pred["ph"].round(2).tolist(),
                 "tds": df_pred["tds"].round(2).tolist(),
+                "turbidity": df_pred["turbidity"].round(2).tolist(),
             }
         }
         return jsonify(result)

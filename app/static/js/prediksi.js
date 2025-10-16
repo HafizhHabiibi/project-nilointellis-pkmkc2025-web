@@ -19,10 +19,10 @@ document.getElementById("btnPrediksi").addEventListener("click", async () => {
         }
 
         const labels = json.data.timestamps;
-        renderChart("chartPh", labels, json.data.ph, "pH");
-        renderChart("chartSuhu", labels, json.data.suhu, "Suhu");
-        renderChart("chartTurbidity", labels, json.data.turbidity, "Turbidity");
-        renderChart("chartTds", labels, json.data.tds, "TDS");
+        renderChart("chartSuhu", labels, json.data.suhu, "suhu");
+        renderChart("chartPh", labels, json.data.ph, "ph");
+        renderChart("chartTds", labels, json.data.tds, "tds");
+        renderChart("chartTurbidity", labels, json.data.turbidity, "turbidity");
 
         document.getElementById("successBox").style.display = "block";
     } catch (err) {

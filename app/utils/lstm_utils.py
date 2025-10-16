@@ -87,7 +87,7 @@ def fetch_last_data():
 
 def predict_future(df):
     # Ambil hanya kolom fitur
-    data_scaled = scaler.transform(df[["ph", "suhu", "turbidity", "tds"]].values)
+    data_scaled = scaler.transform(df[["suhu","ph" ,"tds", "turbidity"]].values)
 
     input_seq = data_scaled[-TIMESTEPS:].reshape(1, TIMESTEPS, N_FEATURES)
     predictions = []
@@ -111,7 +111,7 @@ def predict_future(df):
 
     df_pred = pd.DataFrame(
         predictions,
-        columns=["ph", "suhu", "turbidity", "tds"],
+        columns=["suhu","ph" ,"tds", "turbidity"],
         index=future_time_index
     )
 
